@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # crm-frontend-app
 Control Resource Management System
 =======
