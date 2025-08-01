@@ -11,7 +11,7 @@ import { ProductsComponent } from "./products/products.component";
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, HeaderSideComponent, RouterOutlet, SideNavBarComponent, FooterSideComponent, ProductsComponent],
+  imports: [CommonModule, HeaderSideComponent, RouterOutlet, SideNavBarComponent, FooterSideComponent ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
