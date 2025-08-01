@@ -1,3 +1,35 @@
 import { Routes } from '@angular/router';
+import { ProductsComponent } from './products/products.component';
+import { HeaderSideComponent } from './header-side/header-side.component';
+import { FooterSideComponent } from './footer-side/footer-side.component';
+import { SideNavBarComponent } from './side-nav-bar/side-nav-bar.component';
+import { DeleteModalComponent } from './delete-modal/delete-modal.component';
+import { ContractComponent } from './contract/contract.component';
+import { ClientsComponent } from './clients/clients.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+    { path: 'product-component', component: ProductsComponent },
+    { path: 'header-component', component: HeaderSideComponent },
+    { path: 'footer-component', component: FooterSideComponent },
+    {path: 'side-nav-bar', component: SideNavBarComponent },
+    {path: 'delete-modal', component: DeleteModalComponent },
+    {path: 'contract-component', component: ContractComponent },
+    {path: 'client-component', component: ClientsComponent },
+    {path: 'dashboard-component', component: DashboardComponent },
+
+
+    { path: '', redirectTo: '/product-component', pathMatch: 'full' }
+
+];
+
+
+
+
+
+// <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+//    <span class="sr-only">Open sidebar</span>
+//    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+//       <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+//    </svg>
+// </button>
