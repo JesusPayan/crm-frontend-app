@@ -12,6 +12,9 @@ export class ProductService {
       return this.http.post('http://127.0.0.1:5000/v1/products/create_product', productData);
   }
   getProducts(): Observable<any> {
-    return this.http.get('http://localhost:3000/products');
+    return this.http.get('http://127.0.0.1:5000/v1/products/get_products');
+  }
+  deleteProduct(id: number): Observable<any> {
+    return this.http.delete(`http://127.0.0.1:5000/v1/products/delete_product_by_id/${id}`);
   }
 }

@@ -2,5 +2,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Import Flowbite DESPUÉS de @tailwind */
+@import 'flowbite';
+
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
