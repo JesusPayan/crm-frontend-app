@@ -8,10 +8,12 @@ import { ClientsComponent } from './clients/clients.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
+
+
 export const routes: Routes = [
-    { path: 'product-component', component: ProductsComponent },
-    { path: 'header-component', component: HeaderSideComponent },
-    { path: 'footer-component', component: FooterSideComponent },
+    {path: 'product-component', component: ProductsComponent },
+    {path: 'header-component', component: HeaderSideComponent },
+    {path: 'footer-component', component: FooterSideComponent },
     {path: 'side-nav-bar', component: SideNavBarComponent },
     {path: 'delete-modal', component: DeleteModalComponent },
     {path: 'contract-component', component: ContractComponent },
@@ -21,7 +23,7 @@ export const routes: Routes = [
 
 
 
-    { path: '', redirectTo: '/product-component', pathMatch: 'full' }
+ 
 
 ];
 

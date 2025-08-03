@@ -13,56 +13,46 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <form #productDetailForm="ngForm" (ngSubmit)="createProduct()">
+            <form #productForm (ngSubmit)="onSubmit()" method="post" enctype="multipart/form-data">
                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
-                    <!-- <div>
-                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Name</label>
-                        <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type product name" required="">
-                    </div> -->
+
                     <div>
-                        <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Plataform</label>
-                        <select id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            <option selected="">Select category</option>
-                            <option value="{{product.id}}" *ngFor="let product of streamingProducts">{{product.name}}</option>
-                        </select>
+                        <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripción</label>
+                        <input [ngModelOptions]="{ standalone: true }" [(ngModel)]="product.description" type="text" name="description" id="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Netflix sin Geo" required="">
                     </div>
                     <div>
-                        <label for="brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio perfil Cliente</label>
-                        <input  [(ngModel)]="product.client_profile_price" type="text" name="brand" id="brand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$70" required="">
+                        <label for="profileprice" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio perfil por cliente:</label>
+                        <input [ngModelOptions]="{ standalone: true }" [(ngModel)]="product.client_profile_price"  type="text" name="profileprice" id="profileprice" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$70.00" required="">
                     </div>
                     <div>
-                        <label for="brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio cuenta Cliente</label>
-                        <input [(ngModel)]="product.client_profile_price" type="text" name="brand" id="brand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="230" required="">
+                        <label for="accountprice" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio cuenta Cliente</label>
+                        <input [ngModelOptions]="{ standalone: true }" [(ngModel)]="product.client_complete_price" type="text" name="accountprice" id="accountprice" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$230" required="">
                     </div>
                     <div>
-                        <label for="brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Inversion</label>
-                        <input [(ngModel)]="product.client_profile_price" type="text" name="brand" id="brand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Product brand" required="">
+                        <label for="investment" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Inversion</label>
+                        <input [ngModelOptions]="{ standalone: true }" [(ngModel)]="product.investment" type="text" name="investment" id="investment" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Product brand" required="">
                     </div>
                     <div>
-                        <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Perfiles por cuenta</label>
-                        <input [(ngModel)]="product.client_profile_price" type="number" name="price" id="price" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="1" required="">
+                        <label for="total_profiles" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Perfiles por cuenta</label>
+                        <input [ngModelOptions]="{ standalone: true }" [(ngModel)]="product.total_profiles" type="text" name="total_profiles" id="price" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="1" required="">
+                    </div>
+                    <div>
+                        <label for="expiration_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de expiración</label>
+                        <input [ngModelOptions]="{ standalone: true }" [(ngModel)]="product.expiration_date" type="date" name="expiration_date" id="expiration_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$70" required="">
                     </div>
                     <!-- <div class="grid gap-6 sm:col-span-2 md:gap-6 sm:grid-cols-4"> -->
                         <div class="grid gap-4 mb-4 sm:grid-cols-2">
                         <div>
-                            <label for="weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                            <input type="text" name="weight" id="weight" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="juan@perez.com" required="">
+                            <label for="access_identifier" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                            <input [ngModelOptions]="{ standalone: true }" [(ngModel)]="product.access_identifier" type="text" name="access_identifier" id="access_identifier" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="juan@perez.com" required="" [ngModelOptions]="{ standalone: true }">
                         </div>
                         <div>
-                            <label for="length" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
-                            <input type="text" name="length" id="length" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="105" required="">
+                            <label for="access_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
+                            <input [ngModelOptions]="{ standalone: true }" [(ngModel)]="product.access_password" type="text" name="access_password" id="access_password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="105" required="" [ngModelOptions]="{ standalone: true }">
                         </div>
-                        <!-- <div>
-                            <label for="breadth" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Breadth (cm)</label>
-                            <input type="number" name="breadth" id="breadth" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="15" required="">
-                        </div>
-                        <div>
-                            <label for="width" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Width (cm)</label>
-                            <input type="number" name="width" id="width" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="23" required="">
-                        </div> -->
                     </div>
-                    <div class="sm:col-span-2"><label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Comentarios</label>
-                        <textarea id="description" rows="2" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Write product description here">
+                    <div class="sm:col-span-2"><label for="comments" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Comentarios</label>
+                        <textarea id="description" rows="1" name="comments" id="comments" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Write product description here">
                         </textarea>
                     </div>
                 </div>
@@ -81,20 +71,22 @@
                     </div>
                 </div> -->
                 <div class="mb-4">
-                    <span class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Images</span>
+                    <!-- <span class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Images</span> -->
                     <div class="flex justify-center items-center w-full">
-                        <label for="dropzone-file" class="flex flex-col justify-center items-center w-full h-64 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                            <div class="flex flex-col justify-center items-center pt-5 pb-6">
-                                <svg aria-hidden="true" class="mb-3 w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <label for="image" class="flex flex-col justify-center items-center w-full h-20 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                            <div class="flex flex-col justify-center items-center pt-3 pb-2">
+                                <!-- <svg aria-hidden="true" class="mb-3 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                                </svg>
+                                </svg> -->
                                 <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
                                     <span class="font-semibold">Click to upload</span>
                                     or drag and drop
                                 </p>
                                 <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                             </div>
-                            <input id="dropzone-file" type="file" class="hidden">
+
+                            <input name="image" id="image" type="file" class="hidden" (change)="onFileSelected($event)">
+
                         </label>
                     </div>
                 </div>

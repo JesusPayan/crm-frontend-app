@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { RouterOutlet } from '@angular/router';
 import { Router } from '@angular/router';
 import { Product } from '../models/product';
 import { Header } from '../models/header';
@@ -11,7 +10,7 @@ import { ProductDetailComponent } from '../product-detail/product-detail.compone
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [CommonModule,],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
@@ -40,10 +39,7 @@ export class ProductsComponent {
     alert('hola'+product);
   }
   openCreateProductModal() {
-  
     const dialogRef = this.dialog.open(ProductDetailComponent);
-    alert('Agregado producto.....');
-    
   }
   deleteProduct() {
     alert('Borrando producto.....');
