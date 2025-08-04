@@ -8,6 +8,7 @@ import { HeaderSideComponent } from './header-side/header-side.component';
 import { SideNavBarComponent } from './side-nav-bar/side-nav-bar.component';
 import { FooterSideComponent } from './footer-side/footer-side.component';
 import { ProductsComponent } from "./products/products.component";
+
 @Component({
   selector: 'app-root',
   standalone: true,
