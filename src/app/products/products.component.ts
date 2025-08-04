@@ -8,7 +8,6 @@ import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 import { ProductDetailComponent } from '../product-detail/product-detail.component';
 import { ProductService } from '../services/product.service';
 import { response } from 'express';
-// import { HttpClientModule } from '@angular/common/http';
 import { FormsModule,NgModel,FormControl,ReactiveFormsModule, } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
