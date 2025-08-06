@@ -14,4 +14,7 @@ export class ClientService {
   getClients(): Observable<any> {
     return this.http.get('http://127.0.0.1:5000/v1/clients/get_clients');
   }
+  deleteClient(id: number): Observable<any> {
+    return this.http.delete(`http://127.0.0.1:5000/v1/clients/delete_client_by_id/${id}`);
+  }    
 }

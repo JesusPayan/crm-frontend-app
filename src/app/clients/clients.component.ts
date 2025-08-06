@@ -66,8 +66,11 @@ filterClients() {
 exportClients() {
   
 }
-deleteClient(client: Client) {
+deleteClient(id:number) {
   
+  this.clientService.deleteClient(id).subscribe(console.log);
+  alert("Cliente borrado exitosamente");
+  this.loadClients();
 }
 loadClients() {
     this.clientService.getClients().subscribe({
