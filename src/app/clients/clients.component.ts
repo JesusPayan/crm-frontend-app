@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule,NgModel,FormControl,ReactiveFormsModule, } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
+import { ClientDetailComponent } from '../client-detail/client-detail.component';
 @Component({
   selector: 'app-clients',
   standalone: true,
@@ -39,8 +40,8 @@ export class ClientsComponent {
 
 // abrimos la modal para crear un nuevo cliente
 openCreateClientModal() {
-  // const dialogRef = this.dialog.open(ProductDetailComponent);
-  this.loadClients();
+  const dialogRef = this.dialog.open(ClientDetailComponent);
+
 }
 //flitramos los clientes
 filterClients() {
@@ -81,7 +82,7 @@ loadClients() {
       this.filterClientsList = this.clientList;
       // Si tiene message
       if (data.message) {
-        alert(data.message);
+        // alert(data.message);
       }
     },
     error: (error: any) => {
