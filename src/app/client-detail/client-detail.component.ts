@@ -42,7 +42,7 @@ export class ClientDetailComponent {
       this.editMode = true;
     }
   }
- formData = new FormData();
+//  formData = new FormData();
 
 onSubmit(): void {
   const formData = new FormData();
@@ -97,8 +97,17 @@ evaluateClientStatus(){
 }
 updateClient(id:number){
   console.log("Se actualizará el cliente",this.client);
+
   const formData = new FormData();
-  this.clientService.updateClient(this.formData).subscribe({
+  formData.append('id', this.client.id.toString());
+  formData.append('email1', this.client.email1);
+  formData.append('email2', this.client.email2);
+  formData.append('telephone1', this.client.telephone1);
+  formData.append('telephone2', this.client.telephone2);
+  formData.append('status', this.client.status.toString());
+  formData.append('status_desc', this.client.status_desc);
+  
+  this.clientService.updateClient(formData).subscribe({
     next: (res) => {
         console.log('Cliente actualizado exitosamente:', res);
         alert("Cliente actualizado exitosamente");
