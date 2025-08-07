@@ -1,0 +1,17 @@
+export interface Client {
+    id : number,
+    cve_internal : string,
+    name : string,
+    mother_lastname : string,
+    father_lastname : string,
+    telephone1 : string,
+    telephone2 : string, 
+    email1 : string,
+    email2 : string,
+    status : number,
+    status_desc : string,
+    created_at : Date,
+    created_by : string,
+    updated_at : Date,
+    updated_by : string,
+}
