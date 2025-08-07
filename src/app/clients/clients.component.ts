@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, output, EventEmitter, Input, Output, Inject,NgModule } from '@angular/core';
 import { Client } from '../models/client';
 import { ClientService } from '../services/client.service';
 import { ProductDetailComponent } from '../product-detail/product-detail.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog,MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { FormsModule,NgModel,FormControl,ReactiveFormsModule, } from '@angular/forms';
-import { NgModule } from '@angular/core';
+
 import { SharedModule } from '../shared/shared.module';
 import { ClientDetailComponent } from '../client-detail/client-detail.component';
 @Component({
@@ -19,20 +19,23 @@ import { ClientDetailComponent } from '../client-detail/client-detail.component'
 
 
 export class ClientsComponent {
-
-    constructor(public dialog: MatDialog, private clientService: ClientService) {
+  @Output() clientEvent = new EventEmitter<Client>();
+  constructor(public dialog: MatDialog, private clientService: ClientService) {
     this.clientService.getClients().subscribe(console.log);
+    
   }
-//Inicializamos las variables
+//Declaramos variables
   clientList: Client[] = [];
   filterClientsList: Client[] = [];
-
-
-  //construimos el componente
-
   totalClients: number = 0;
-   searchText: string = '';
-   response: any;
+  searchText: string = '';
+  response: any;
+
+  
+  
+  handleChildEvent(event: any) {
+    console.log('Evento recibido del hijo:', event);
+  }
 //Se inicializa el componente cliente
   ngOnInit(): void {
    this.loadClients(); 
@@ -41,9 +44,8 @@ export class ClientsComponent {
 // abrimos la modal para crear un nuevo cliente
 openCreateClientModal() {
   const dialogRef = this.dialog.open(ClientDetailComponent);
-
 }
-//flitramos los clientes
+//flitramos los clientes por nombre, apellido, email, telefono  
 filterClients() {
     const term = (this.searchText || '').toLowerCase().trim();
 
@@ -91,6 +93,12 @@ loadClients() {
     error: (error: any) => {
       console.error('ERROR AL CARGAR CLIENTES:', error);
     }
+  });
+}
+
+openUpdateClientModal(client: Client) {
+  const dialogRef = this.dialog.open(ClientDetailComponent, {
+    data: client,
   });
 }
 }

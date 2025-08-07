@@ -16,5 +16,8 @@ export class ClientService {
   }
   deleteClient(id: number): Observable<any> {
     return this.http.delete(`http://127.0.0.1:5000/v1/clients/delete_client_by_id/${id}`);
+  }
+  updateClient(clientData: FormData): Observable<any> {
+    return this.http.put(`http://127.0.0.1:5000/v1/clients/update_client`, clientData);
   }    
 }

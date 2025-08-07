@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, output, EventEmitter, Input, Output, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormsModule,NgForm,NgModel } from '@angular/forms';
@@ -6,7 +6,7 @@ import { Client } from '../models/client';
 import { ClientService } from '../services/client.service';
 import { response } from 'express';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-client-detail',
@@ -16,6 +16,8 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrl: './client-detail.component.css'
 })
 export class ClientDetailComponent {
+  //Declaramos variables
+  editMode = false;
   client:Client = {
     id:0,
     cve_internal: '',
@@ -33,9 +35,14 @@ export class ClientDetailComponent {
     updated_at: new Date(),
     updated_by: ''
   }
-
-  constructor(private clientService: ClientService,private dialog: MatDialog) {}
-
+  
+  constructor(private clientService: ClientService,private dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: Client) {
+    if (data) {
+      this.client = data;
+      this.editMode = true;
+    }
+  }
+ formData = new FormData();
 
 onSubmit(): void {
   const formData = new FormData();
@@ -78,5 +85,28 @@ onSubmit(): void {
 closeModal(): void {
   this.dialog.closeAll();
 }
-
+evaluateClientStatus(){
+  if(this.client.status == 0){
+    this.client.status = 1;
+    this.client.status_desc = 'Activo';
+  }
+  else{
+    this.client.status = 0;
+    this.client.status_desc = 'Inactivo';
+  }
+}
+updateClient(id:number){
+  console.log("Se actualizará el cliente",this.client);
+  const formData = new FormData();
+  this.clientService.updateClient(this.formData).subscribe({
+    next: (res) => {
+        console.log('Cliente actualizado exitosamente:', res);
+        alert("Cliente actualizado exitosamente");
+    },
+    error: (error) => {
+      console.error(error);
+    }
+  })
+  this.closeModal();
+}
 }
