@@ -5,6 +5,7 @@ import { ProductDetailComponent } from '../product-detail/product-detail.compone
 import { MatDialog,MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { FormsModule,NgModel,FormControl,ReactiveFormsModule, } from '@angular/forms';
+import * as XLSX from 'xlsx';
 
 import { SharedModule } from '../shared/shared.module';
 import { ClientDetailComponent } from '../client-detail/client-detail.component';
@@ -66,7 +67,10 @@ filterClients() {
 }
 //Exportamos los clientes a excel o csv }
 exportClients() {
-  
+  const worksheet = XLSX.utils.json_to_sheet(this.clientList);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Clientes');
+  XLSX.writeFile(workbook, 'clientes.xlsx');
 }
 deleteClient(id:number) {
   
