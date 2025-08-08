@@ -12,6 +12,7 @@ import { FormsModule,NgModel,FormControl,ReactiveFormsModule, } from '@angular/f
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { allowedNodeEnvironmentFlags } from 'process';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-products',
@@ -106,6 +107,10 @@ export class ProductsComponent {
           this.ngOnInit();
   }
   exportProducts() {
-    alert('Ecportando productos.....');
+    const worksheet = XLSX.utils.json_to_sheet(this.productList);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Productos');
+      XLSX.writeFile(workbook, 'Productos.xlsx');
+    alert('Productos exportados exitosamente');
   }
 }
