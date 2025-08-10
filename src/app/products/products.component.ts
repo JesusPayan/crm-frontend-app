@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -12,7 +12,11 @@ import { FormsModule,NgModel,FormControl,ReactiveFormsModule, } from '@angular/f
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { allowedNodeEnvironmentFlags } from 'process';
+import { ProductSummary } from '../models/product_summary';
 
+@Injectable({
+  providedIn: 'root'
+})
 @Component({
   selector: 'app-products',
   standalone: true,
@@ -26,8 +30,8 @@ export class ProductsComponent {
     this.productService.getProducts().subscribe(console.log);
   }
   filteredProducts:Product[] = [];
-
   productList:Product[] = [];
+  productSummaryList:ProductSummary[] = [];
 
   available: number = 0;
   nextToExpire = 2;
@@ -75,6 +79,23 @@ export class ProductsComponent {
               this.filteredProducts = this.productList;
               this.total_products = this.productList.length;
               this.populateHeaders();
+              try {
+        //mapeamos hacemos una sublistas para no hacer un hit adicional a la api
+              const productSummaryList = this.productList.map(product => ({
+                // id: product.id,
+                // cve_internal: product.cve_internal,
+                description: product.description,
+                // expiration_date: product.expiration_date,
+                // active_profiles: product.active_profiles,
+                // available_profiles: product.available_profiles
+      
+              }))
+              //convertimos la lista en un json para utilizarlo en otro componente
+              this.productSummaryList = JSON.parse(JSON.stringify(productSummaryList));
+              localStorage.setItem('clientSumaryList', JSON.stringify(this.productSummaryList));
+            } catch (error) {
+              console.error('Error al obtener la lista de clientes:', error);
+            }
             },
             error: (error: any) =>{
               console.error(error);

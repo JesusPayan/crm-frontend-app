@@ -9,6 +9,8 @@ import { FormsModule,NgModel,FormControl,ReactiveFormsModule, } from '@angular/f
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import {ContractSummary} from '../models/contractSummary';
+import * as XLSX from 'xlsx';
+import { ContractDetailComponent } from '../contract-detail/contract-detail.component';
 @Component({
   selector: 'app-contract',
   standalone: true,
@@ -45,6 +47,7 @@ export class ContractComponent {
               this.filteredContracts = this.contractList;
               this.totalContracts = this.contractList.length;
               // this.populateHeaders();
+              // localStorage.setItem('contractList', JSON.stringify(this.contractList));
             },
             error: (error: any) =>{
               console.error(error);
@@ -73,11 +76,14 @@ export class ContractComponent {
     
   }
   exportContracts(): void {
-    
+     const worksheet = XLSX.utils.json_to_sheet(this.filteredContracts);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Clientes');
+      XLSX.writeFile(workbook, 'clientes.xlsx');
   }
   openCreateContractModal(): void {
-    // const dialogRef = this.dialog.open(CreateContractModalComponent, {});
-    this.getContracts();
+    const dialogRef = this.dialog.open(ContractDetailComponent);
+    
   }
 
   addContract(): void {

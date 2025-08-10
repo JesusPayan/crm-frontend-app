@@ -17,4 +17,7 @@ export class ProductService {
   deleteProduct(id: number): Observable<any> {
     return this.http.delete(`http://127.0.0.1:5000/v1/products/delete_product_by_id/${id}`);
   }
+  getProductsSummary(): Observable<any> {
+    return this.http.get('http://127.0.0.1:5000/v1/products/get_products_summary');
+  }
 }

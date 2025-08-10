@@ -19,5 +19,8 @@ export class ClientService {
   }
   updateClient(clientData: FormData): Observable<any> {
     return this.http.put(`http://127.0.0.1:5000/v1/clients/update_client`, clientData);
-  }    
+  }   
+  getClientsSummary(): Observable<any> {
+    return this.http.get('http://127.0.0.1:5000/v1/clients/get_clients_summary');
+  } 
 }

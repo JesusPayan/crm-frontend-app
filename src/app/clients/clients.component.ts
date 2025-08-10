@@ -1,4 +1,4 @@
-import { Component, output, EventEmitter, Input, Output, Inject,NgModule } from '@angular/core';
+import { Component, output, EventEmitter, Input, Output, Inject,NgModule,Injectable } from '@angular/core';
 import { Client } from '../models/client';
 import { ClientService } from '../services/client.service';
 import { ProductDetailComponent } from '../product-detail/product-detail.component';
@@ -6,9 +6,13 @@ import { MatDialog,MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { FormsModule,NgModel,FormControl,ReactiveFormsModule, } from '@angular/forms';
 import * as XLSX from 'xlsx';
-
 import { SharedModule } from '../shared/shared.module';
 import { ClientDetailComponent } from '../client-detail/client-detail.component';
+import { ClientSummary } from '../models/client_summary';
+
+@Injectable({
+  providedIn: 'root'
+})
 @Component({
   selector: 'app-clients',
   standalone: true,
@@ -31,7 +35,7 @@ export class ClientsComponent {
   totalClients: number = 0;
   searchText: string = '';
   response: any;
-
+  clientSumaryList: ClientSummary[] = [];
   
   
   handleChildEvent(event: any) {
@@ -89,10 +93,27 @@ loadClients() {
       // Actualiza total de clientes
       this.totalClients = this.clientList.length;
       this.filterClientsList = this.clientList;
-      // Si tiene message
-      if (data.message) {
-        // alert(data.message);
+      try {
+        //mapeamos hacemos una sublistas para no hacer un hit adicional a la api
+        const clientSummaryList = this.clientList.map(client => ({
+          id: client.id,
+          cve_internal: client.cve_internal,
+          name: client.name,
+          father_lastname: client.father_lastname,
+          mother_lastname: client.mother_lastname,
+          email1: client.email1,
+          telephone1: client.telephone1
+
+        }))
+        //convertimos la lista en un json para utilizarlo en otro componente
+        this.clientSumaryList = JSON.parse(JSON.stringify(clientSummaryList));
+        localStorage.setItem('clientSumaryList', JSON.stringify(this.clientSumaryList));
+      } catch (error) {
+        console.error('Error al obtener la lista de clientes:', error);
       }
+      
+
+      
     },
     error: (error: any) => {
       console.error('ERROR AL CARGAR CLIENTES:', error);
