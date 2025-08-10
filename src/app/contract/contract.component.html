@@ -59,30 +59,30 @@
                     </form>
                 </div>
                 <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                    <button type="button" id="createProductButton" data-modal-toggle="createProductModal" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" data-tooltip-target="createProductTooltip" (click)="openCreateProductModal()">
-                        <!-- <svg class="h-3.5 w-3.5 mr-1.5 -ml-1" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
-                        </svg> -->
-                        Agregar Producto
+                    <button type="button" id="createProductButton" data-modal-toggle="createProductModal" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"  (click)="openCreateContractModal()">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-success" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4.243a1 1 0 1 0-2 0V11H7.757a1 1 0 1 0 0 2H11v3.243a1 1 0 1 0 2 0V13h3.243a1 1 0 1 0 0-2H13V7.757Z" clip-rule="evenodd"/>
+                    </svg>
+                        Crear Contrato 
                     </button>
-                    <button type="button" id="createProductButton" data-modal-toggle="createProductModal" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" data-tooltip-target="createProductTooltip" (click)="openCreateProductModal()">
-                        <!-- <svg class="h-3.5 w-3.5 mr-1.5 -ml-1" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <!-- <button type="button" id="createProductButton" data-modal-toggle="createProductModal" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"  (click)="openCreateContractModal()">
+                        <svg class="h-3.5 w-3.5 mr-1.5 -ml-1" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
-                        </svg> -->
+                        </svg> 
                         Importar Productos
-                    </button>
-                    <button type="button" id="createProductButton" data-modal-toggle="createProductModal" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" data-tooltip-target="createProductTooltip" (click)="exportProducts()">
+                    </button> -->
+                    <button type="button" id="createProductButton" data-modal-toggle="createProductModal" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"  (click)="exportContracts()">
                         <!-- <svg class="h-3.5 w-3.5 mr-1.5 -ml-1" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                         </svg> -->
                         <i class="fi fi-rr-download"></i>
-                        Exportar Productos
+                        Exportar Contratos
                     </button>
                 </div>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 text-center">
                         <tr>
                             <th scope="col" class="p-4">
                                 <div class="flex items-center">
@@ -90,15 +90,17 @@
                                     <label for="checkbox-all" class="sr-only">checkbox</label>
                                 </div>
                             </th>
-                            <th scope="col" class="p-4">CVE</th>
-                            <th scope="col" class="p-4">Description</th>
-                            <th scope="col" class="p-4">Perfiles disponibles</th>
-                            <th scope="col" class="p-4">Perfiles contratados</th>
-                            <th scope="col" class="p-4">Fecha Creacion</th>
-                            <th scope="col" class="p-4">Fecha Expiracion</th>
-                            <th scope="col" class="p-4">Correo</th>
-                            <th scope="col" class="p-4">Contraseña</th>
-                            <th scope="col" class="p-4">Comentarios</th>
+                            <th scope="col" class="p-4 text-center">ID</th>
+                            <th scope="col" class="p-4">Cliente</th>
+                            <th scope="col" class="p-4">Telefono</th>
+                            <th scope="col" class="p-4">Producto</th>
+                            <th scope="col" class="p-4">Estatus</th>
+                            <th scope="col" class="p-4">Fecha de Inicio</th>
+                            <th scope="col" class="p-4">Fecha de Fin</th>
+                            <th scope="col" class="p-4">Dias Restantes</th>
+                            <th scope="col" class="p-4">Precio</th>
+                            <th scope="col" class="p-4">Tipo</th>
+                            <th scope="col" class="p-4">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -111,49 +113,37 @@
                             </td>
                             <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <div class="flex items-center mr-3">
-                                    <img src="{{product.image}}" alt="" class="h-8 w-auto mr-3">
-                                    {{product.cve_internal}}
+                                    {{contract.id}}
                                 </div>
                             </th>
-                            <td class="px-4 py-3">
-                                <span class="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">{{product.description}}</span>
-                            </td>
-                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <div class="flex items-center">
-                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-red-700"></div>
-                                    {{product.available_profiles}}
-                                </div>
-                            </td>
-                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{product.active_profiles}}</td>
-                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{product.created_at | date: 'shortDate' }}</td>
-                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <div class="flex items-center">
-                                    {{product.expiration_date| date: 'shortDate' }}
-                                </div>
-                            </td>
-                            <td class="px-4 py-3">{{product.access_identifier}}</td>
-                            <td class="px-4 py-3">{{product.access_password}}</td>
+                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">{{contract.Cliente}}</td>
+                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><a href="https://wa.me/{{contract.telephone1}}">{{contract.telephone1}}</a></td>
+                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{contract.Description}}</td>
+                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{contract.status_desc}}</td>
+                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{contract.start_date | date: 'shortDate' }}</td>
+                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{contract.end_date | date: 'shortDate' }}</td>
+                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{contract.days_left}}</td>
+                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">${{contract.total_price}}</td>
+                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{contract.contract_type_desc}}</td>
                             <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <div class="flex items-center space-x-4">
-                                    <button type="button" data-drawer-target="drawer-update-product" data-drawer-show="drawer-update-product" aria-controls="drawer-update-product" class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                            <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                            <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
+                                    <button type="button"  data-drawer-show="drawer-update-product" aria-controls="drawer-update-product" class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3M3.22302 14C4.13247 18.008 7.71683 21 12 21c4.9706 0 9-4.0294 9-9 0-4.97056-4.0294-9-9-9-3.72916 0-6.92858 2.26806-8.29409 5.5M7 9H3V5"/>
                                         </svg>
-                                        Editar
                                     </button>
-                                    <button type="button" data-drawer-target="drawer-read-product-advanced" data-drawer-show="drawer-read-product-advanced" aria-controls="drawer-read-product-advanced" class="py-2 px-3 flex items-center text-sm font-medium text-center text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="w-4 h-4 mr-2 -ml-0.5">
-                                            <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" />
-                                        </svg>
-                                        Preview
+                                    <button type="button"   aria-controls="drawer-read-product-advanced" class="py-2 px-3 flex items-center text-sm font-medium text-center text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                        <path fill-rule="evenodd" d="M4 3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h1v2a1 1 0 0 0 1.707.707L9.414 13H15a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4Z" clip-rule="evenodd"/>
+                                        <path fill-rule="evenodd" d="M8.023 17.215c.033-.03.066-.062.098-.094L10.243 15H15a3 3 0 0 0 3-3V8h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-1v2a1 1 0 0 1-1.707.707L14.586 18H9a1 1 0 0 1-.977-.785Z" clip-rule="evenodd"/>
+                                    </svg>
+                                        <!-- recordatorio Cliente -->
                                     </button>
-                                    <button type="button" data-modal-target="deleteModal" data-modal-toggle="deleteModal" class="flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900" (click)="deleteProduct(product.id)">
+                                    <button type="button"  class="flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900" (click)="deleteContract(contract.id)">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                             <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
                                         </svg>
-                                        Delete
+                                        <!-- Delete -->
                                     </button>
                                 </div>
                             </td>
