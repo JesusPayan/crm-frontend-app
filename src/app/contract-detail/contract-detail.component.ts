@@ -1,13 +1,15 @@
-import { Component,Injectable } from '@angular/core';
+import { Component,Inject,Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { ClientSummary } from '../models/client_summary';
 import { ProductSummary } from '../models/product_summary';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog,MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ClientService } from '../services/client.service';
 import { ContractService } from '../services/contract.service';
 import { ProductService } from '../services/product.service';
+import { response } from 'express';
+import { Client } from '../models/client';
 @Injectable({
   providedIn: 'root'
 })
@@ -24,6 +26,7 @@ export class ContractDetailComponent {
   productSummaryList: ProductSummary[] = [];
   response: any;
   cadenas: string[] = ['Manzana', 'Plátano', 'Naranja', 'Uva'];
+  contractType: string[] = ['Perfil', 'Cuenta completa'];
   contractDuration:string [] = 
   ['Mensual',
   'Bimestral',
@@ -40,25 +43,60 @@ export class ContractDetailComponent {
     email1: '',
     telephone1: ''
   };
-
-  constructor(private dialog: MatDialog, private clientService: ClientService,private contractService: ContractService, private productService: ProductService) {}
+  selectedProduct: ProductSummary = {} as ProductSummary;
+  selectedContractType: string = '';
+  selectedContractDuration: string = '';
+  loggedUser = 'admin'; 
+  receipClient: string = ''; 
+  client: boolean = false
+  constructor(private dialog: MatDialog, private clientService: ClientService,private contractService: ContractService, private productService: ProductService, @Inject(MAT_DIALOG_DATA) public data: Client) {
+    if (data) {
+      this.clientSummary = data;
+      this.receipClient = this.clientSummary.name + ' ' + this.clientSummary.father_lastname + ' ' + this.clientSummary.mother_lastname
+      this.client = true;
+    }
+  }
 
   ngOnInit() {
     // Inicialización de la variable
-    this.clientService.getClientsSummary().subscribe((data) => {
+    if (this.clientSumaryList.length === 0) {
+      this.clientService.getClientsSummary().subscribe((data) => {
       this.clientSumaryList = data;
       this.response = data;
       console.log(this.response);
-    })
-    this.productService.getProductsSummary().subscribe((data) => {
+    });
+    }
+    if (this.productSummaryList.length === 0) {
+      this.productService.getProductsSummary().subscribe((data) => {
       this.productSummaryList = data;
       this.response = data;
       console.log(this.response);
-    })
+    });
+    }
+    
 
   }
   onSubmit() {
+
+    const newContract = new FormData();
+    console.log(this.selectedClient);
+    console.log(this.selectedProduct);
+    console.log(this.selectedContractType);
+    console.log(this.selectedContractDuration);
+    //Asignamos los valores a los campos del formulario
+    newContract.append('client_id', this.selectedClient.toString());
+    newContract.append('product_name', this.selectedProduct.toString());
+    newContract.append('contract_type', this.selectedContractType.toString());
+    newContract.append('contract_duration', this.selectedContractDuration.toString());
+    newContract.append('created_by', this.loggedUser);
+    // Enviamos el formulario al servicio
+    this.contractService.createNewContract(newContract).subscribe((data) => {
+      this.response = data;
+      console.log(this.response);
+      alert(this.response.message);
+    });
     console.log('Form submitted!');
+    
   }
 closeModal() {
   // Lógica para cerrar el modal

@@ -9,6 +9,7 @@ import * as XLSX from 'xlsx';
 import { SharedModule } from '../shared/shared.module';
 import { ClientDetailComponent } from '../client-detail/client-detail.component';
 import { ClientSummary } from '../models/client_summary';
+import { ContractDetailComponent } from '../contract-detail/contract-detail.component';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,7 @@ export class ClientsComponent {
   searchText: string = '';
   response: any;
   clientSumaryList: ClientSummary[] = [];
-  
+  statusColor = '';
   
   handleChildEvent(event: any) {
     console.log('Evento recibido del hijo:', event);
@@ -44,6 +45,7 @@ export class ClientsComponent {
 //Se inicializa el componente cliente
   ngOnInit(): void {
    this.loadClients(); 
+
 }
 
 // abrimos la modal para crear un nuevo cliente
@@ -93,24 +95,25 @@ loadClients() {
       // Actualiza total de clientes
       this.totalClients = this.clientList.length;
       this.filterClientsList = this.clientList;
-      try {
-        //mapeamos hacemos una sublistas para no hacer un hit adicional a la api
-        const clientSummaryList = this.clientList.map(client => ({
-          id: client.id,
-          cve_internal: client.cve_internal,
-          name: client.name,
-          father_lastname: client.father_lastname,
-          mother_lastname: client.mother_lastname,
-          email1: client.email1,
-          telephone1: client.telephone1
-
-        }))
-        //convertimos la lista en un json para utilizarlo en otro componente
-        this.clientSumaryList = JSON.parse(JSON.stringify(clientSummaryList));
-        localStorage.setItem('clientSumaryList', JSON.stringify(this.clientSumaryList));
-      } catch (error) {
-        console.error('Error al obtener la lista de clientes:', error);
-      }
+      
+        
+      // try {
+      //   //mapeamos hacemos una sublistas para no hacer un hit adicional a la api
+      //   const clientSummaryList = this.clientList.map(client => ({
+      //     id: client.id,
+      //     cve_internal: client.cve_internal,
+      //     name: client.name,
+      //     father_lastname: client.father_lastname,
+      //     mother_lastname: client.mother_lastname,
+      //     email1: client.email1,
+      //     telephone1: client.telephone1
+      //   }))
+      //   //convertimos la lista en un json para utilizarlo en otro componente
+      //   this.clientSumaryList = JSON.parse(JSON.stringify(clientSummaryList));
+      //   localStorage.setItem('clientSumaryList', JSON.stringify(this.clientSumaryList));
+      // } catch (error) {
+      //   console.error('Error al obtener la lista de clientes:', error);
+      // }
       
 
       
@@ -125,5 +128,12 @@ openUpdateClientModal(client: Client) {
   const dialogRef = this.dialog.open(ClientDetailComponent, {
     data: client,
   });
+}
+//asignamos un contrato desde la vista de clientes
+assignContract(client: Client) {
+  this.clientEvent.emit(client);
+  const dialogRef = this.dialog.open(ContractDetailComponent, {
+    data: client,
+  })
 }
 }
