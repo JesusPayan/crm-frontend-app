@@ -4,7 +4,7 @@ import { ContractService } from '../services/contract.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Contract } from '../models/contract';
 import { Header } from '../models/header';
-import { response } from 'express';
+import { response, Router } from 'express';
 import { FormsModule,NgModel,FormControl,ReactiveFormsModule, } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
@@ -29,6 +29,8 @@ export class ContractComponent {
   available: number = 0;
   contracted: number = 0;
   response: any;
+  telephone: string = '';
+  message: string = '';
   //Inicializamos el componente e inyectamos dependencias
   constructor(public dialog: MatDialog,public contractService: ContractService) { }
    headerList: Header[] = [
@@ -46,14 +48,13 @@ export class ContractComponent {
               this.contractList = this.response;
               this.filteredContracts = this.contractList;
               this.totalContracts = this.contractList.length;
-              // this.populateHeaders();
-              // localStorage.setItem('contractList', JSON.stringify(this.contractList));
             },
             error: (error: any) =>{
               console.error(error);
             }
           });
   }
+
   filterContracts() {
     const term = this.searchText.toLowerCase().trim();
     if (!term) {
@@ -86,10 +87,25 @@ export class ContractComponent {
     
   }
 
-  addContract(): void {
-   
-  }  
+ 
   deleteContract(id: number): void {
     
   }
+  renovateContract(id: number): void {
+    this.contractService.renovateContract(id).subscribe(console.log);  
+  }
+sendReminder(telephone: string, name: string, day_left: number, productContrated: string): void {
+  
+  this.message = "Hola "+ name + " te recordamos que tu sevicio de "+ productContrated + "  expira en " + day_left + " dias";
+  // const encodedMessage = encodeURIComponent(this.message);
+  const url = `https://api.whatsapp.com/send?phone=${telephone}&text=${encodeURIComponent(this.message)}`;
+  window.open(url, '_blank'); // Abre en nueva pestaña
+  alert('Se envio un recordatorio al cliente');
+}
+shareContract(name:string,phone:string,email:string,password:string,starDate:Date,endDate:Date, productContrated: string): void {
+  this.message = "Hola, "+ name + " gracias por contratar tu servicio.\nTe compartimos los datos de acceso de que tu sevicio de "+ productContrated + "\n- Correo: " + email + "\n- Contraseña: " + password + " \n- Fecha inicio: " + starDate + "\n- Fecha fin: " + endDate + ".";
+  const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(this.message)}`;
+  window.open(url, '_blank');
+  alert("Se compartio el contrato con el cliente");
+}
 }

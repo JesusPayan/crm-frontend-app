@@ -79,23 +79,7 @@ export class ProductsComponent {
               this.filteredProducts = this.productList;
               this.total_products = this.productList.length;
               this.populateHeaders();
-              try {
-        //mapeamos hacemos una sublistas para no hacer un hit adicional a la api
-              const productSummaryList = this.productList.map(product => ({
-                // id: product.id,
-                // cve_internal: product.cve_internal,
-                description: product.description,
-                // expiration_date: product.expiration_date,
-                // active_profiles: product.active_profiles,
-                // available_profiles: product.available_profiles
-      
-              }))
-              //convertimos la lista en un json para utilizarlo en otro componente
-              this.productSummaryList = JSON.parse(JSON.stringify(productSummaryList));
-              localStorage.setItem('clientSumaryList', JSON.stringify(this.productSummaryList));
-            } catch (error) {
-              console.error('Error al obtener la lista de clientes:', error);
-            }
+              
             },
             error: (error: any) =>{
               console.error(error);

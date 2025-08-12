@@ -1,6 +1,7 @@
 import { Component,Inject,Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { ClientSummary } from '../models/client_summary';
 import { ProductSummary } from '../models/product_summary';
@@ -48,12 +49,16 @@ export class ContractDetailComponent {
   selectedContractDuration: string = '';
   loggedUser = 'admin'; 
   receipClient: string = ''; 
-  client: boolean = false
+  client: boolean = false;
+  clientID: number = 0
+  private router = Inject(Router);
   constructor(private dialog: MatDialog, private clientService: ClientService,private contractService: ContractService, private productService: ProductService, @Inject(MAT_DIALOG_DATA) public data: Client) {
     if (data) {
       this.clientSummary = data;
       this.receipClient = this.clientSummary.name + ' ' + this.clientSummary.father_lastname + ' ' + this.clientSummary.mother_lastname
+
       this.client = true;
+      this.clientID = this.clientSummary.id
     }
   }
 
@@ -84,7 +89,12 @@ export class ContractDetailComponent {
     console.log(this.selectedContractType);
     console.log(this.selectedContractDuration);
     //Asignamos los valores a los campos del formulario
-    newContract.append('client_id', this.selectedClient.toString());
+    if (this.client) {
+      newContract.append('client_id', this.clientID.toString());
+    }else{
+      newContract.append('client_id', this.selectedClient.toString());
+    }
+    // newContract.append('client_id', this.selectedClient.toString());
     newContract.append('product_name', this.selectedProduct.toString());
     newContract.append('contract_type', this.selectedContractType.toString());
     newContract.append('contract_duration', this.selectedContractDuration.toString());
@@ -94,8 +104,12 @@ export class ContractDetailComponent {
       this.response = data;
       console.log(this.response);
       alert(this.response.message);
+      alert(this.response.data);
+      this.closeModal();
+      alert("Contrato guardado exitosamente");
+      this.router.navigate(['/contracts-component']);
     });
-    console.log('Form submitted!');
+    
     
   }
 closeModal() {

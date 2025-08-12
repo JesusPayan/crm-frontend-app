@@ -7,6 +7,7 @@ import { ClientService } from '../services/client.service';
 import { response } from 'express';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-client-detail',
@@ -43,7 +44,7 @@ export class ClientDetailComponent {
     }
   }
 //  formData = new FormData();
-
+private router = Inject(Router);
 onSubmit(): void {
   const formData = new FormData();
   if (this.client.name == '') {
@@ -54,9 +55,6 @@ onSubmit(): void {
   }
   else if (this.client.mother_lastname == '') {
     alert('Please enter your last name')
-  }
-  else if (this.client.email1 == '') {
-    alert('Please enter your email')
   }
   else if (this.client.telephone1 == '') {
     alert('Please enter your phone number')
@@ -74,14 +72,17 @@ onSubmit(): void {
       next: (res) => {
           console.log('Cliente guardado exitosamente:', res);
           alert("Cliente guardado exitosamente");
+          this.router.navigate(['/contracts-component']);
+          
       },
       error: (error) => {
         console.error(error);
       }
     })
-  }
-  this.closeModal();
+    this.closeModal();
 }
+  }
+  
 closeModal(): void {
   this.dialog.closeAll();
 }

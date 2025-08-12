@@ -14,5 +14,7 @@ export class ContractService {
   createNewContract(contractData: FormData): Observable<any> {
     return this.http.post('http://127.0.0.1:5000/v1/contracts/create_contract', contractData);
   }
-
+  renovateContract(id: number): Observable<any> {
+    return this.http.post('http://127.0.0.1:5000/v1/contracts/renovate_contract/', id);
+  }
 }

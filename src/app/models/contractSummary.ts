@@ -7,6 +7,8 @@ mother_lastname: string;
 telephone1: string;
 status_desc: string;
 Description: string;
+access_identifier: string;
+access_password: string;
 total_price: number;
 start_date: Date;
 end_date: Date;
