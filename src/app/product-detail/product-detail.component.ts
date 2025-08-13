@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component  , OnInit, Output, EventEmitter, Input, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog , MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators, FormControl, FormsModule,NgForm,NgModel } from '@angular/forms';
 import { Product } from '../models/product';
 import { ProductService } from '../services/product.service';
@@ -17,9 +17,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrl: './product-detail.component.css'
 })
 export class ProductDetailComponent {
-  data: any;
   response: any;
-
+  editMode = false;
   product: Product = {
     id : 0,
     cve_internal : '',
@@ -59,11 +58,15 @@ streamingProducts: any[] = [
 
 
 ]
-
+loggedUser = 'admin';
   // productForm: FormGroup;
   selectedFile: File | null = null;
   // constructor(public dialog: MatDialog,private productService: ProductService ) { }
-  constructor(private fb: FormBuilder, private productService: ProductService, public dialog: MatDialog) {
+  constructor(private fb: FormBuilder, private productService: ProductService, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: Product ) {
+    if (data) {
+      this.product = data;
+      this.editMode = true;
+    }
     // this.productForm = this.fb.group({
     //   description: ['description', Validators.required],
     //   price: ['', Validators.required],
@@ -97,7 +100,7 @@ streamingProducts: any[] = [
     formData.append('created_at', this.product.created_at.toString());
     formData.append('created_by', this.product.created_by);
     formData.append('updated_at', this.product.updated_at.toString());
-    formData.append('updated_by', this.product.updated_by);
+    formData.append('updated_by', this.loggedUser);
     formData.append('access_identifier', this.product.access_identifier);
     formData.append('access_password', this.product.access_password);
     formData.append('expiration_date', this.product.expiration_date.toString());
@@ -108,7 +111,6 @@ streamingProducts: any[] = [
     
         console.log('Producto guardado exitosamente:', res);
         alert(res.message);
-        // this.productForm.reset(); // Uncomment if using a form
         this.selectedFile = null;
         this.dialog.closeAll();
       },
@@ -116,38 +118,39 @@ streamingProducts: any[] = [
     });
   }
 
-//metodo para cargar una imagen
-  // onFileSelected(event: Event) {
-  //   const file = (event.target as HTMLInputElement).files![0];
-  //   const reader = new FileReader();
-  //   reader.onload = () => {
-  //     this.product.image = reader.result as string;
-  //   };
-  //   reader.readAsDataURL(file);
-    
-  // }
+  updateProduct(): void {
+    const formData = new FormData();
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile, this.selectedFile.name);
+      }
+      formData.append('id', this.product.id.toString());
+      formData.append('description', this.product.description);
+      formData.append('investment', this.product.investment.toString());
+      formData.append('client_profile_price', this.product.client_profile_price.toString());
+      formData.append('client_complete_price', this.product.client_complete_price.toString());
+      formData.append('product_profit_profile', this.product.product_profit_profile.toString());
+      formData.append('product_profit_per_complete', this.product.product_profit_per_complete.toString());
+      formData.append('total_profiles', this.product.total_profiles.toString());
+      formData.append('active_profiles', this.product.active_profiles.toString());
+      formData.append('available_profiles', this.product.available_profiles.toString());
+      formData.append('status', this.product.status.toString());
+      formData.append('status_desc', this.product.status_desc);
+      formData.append('updated_by', this.loggedUser);
+      formData.append('access_identifier', this.product.access_identifier);
+      formData.append('access_password', this.product.access_password);
+      formData.append('expiration_date', this.product.expiration_date.toString());
 
-  //Metodo para crear un nuevo producto
-//  createProduct() {
-//   console.log("Creando prodcucto");
-//   if (this.fileInput && this.productDetailForm.isValid()) {
-//     const product = this.productDetailForm.value;
-//     this.productService.createNewProduct(product).subscribe((response) => {
-//       if (response) {
-//         this.response = response;
-//       }
-//       console.log(response);
-//     });
-    
-//   }
-  
-// }  
-// onFileSelected(event: Event): void {
-//     const fileInput = event.target as HTMLInputElement;
-//     if (fileInput.files && fileInput.files.length > 0) {
-//       this.selectedFile = fileInput.files[0];
-//     }
-//   }
+    // Enviar al backend
+    this.productService.updateProduct(formData).subscribe({
+      next: (res) => {
+        console.log('Producto actualizado exitosamente:', res);
+        alert(res.message);
+        this.selectedFile = null;
+        this.dialog.closeAll();
+      },
+      error: (err) => console.error('Error al actualizar producto:', err)
+    });
+  }
   
   
       

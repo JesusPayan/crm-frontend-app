@@ -87,7 +87,7 @@ deleteClient(id:number) {
 loadClients() {
     this.clientService.getClients().subscribe({
    next: (data: any) => {
-      console.log('DATA COMPLETA:', data); // 👈 Mira esto en la consola del navegador
+      // console.log('DATA COMPLETA:', data); // 👈 Mira esto en la consola del navegador
 
       // Ajusta según la estructura real que te devuelve el backend
       this.clientList = data.data || data; // Usa data.data si existe, si no, usa data directo

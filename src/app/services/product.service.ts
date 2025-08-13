@@ -20,4 +20,7 @@ export class ProductService {
   getProductsSummary(): Observable<any> {
     return this.http.get('http://127.0.0.1:5000/v1/products/get_products_summary');
   }
+  updateProduct(productData: FormData): Observable<any> {
+    return this.http.put(`http://127.0.0.1:5000/v1/products/update_product`, productData);
+  }
 }
