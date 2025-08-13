@@ -1,4 +1,4 @@
-import { Component, output, EventEmitter, Input, Output, Inject,NgModule } from '@angular/core';
+import { Component, output, EventEmitter, Input, Output, Inject,NgModule,Injectable } from '@angular/core';
 import { Client } from '../models/client';
 import { ClientService } from '../services/client.service';
 import { ProductDetailComponent } from '../product-detail/product-detail.component';
@@ -6,9 +6,14 @@ import { MatDialog,MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { FormsModule,NgModel,FormControl,ReactiveFormsModule, } from '@angular/forms';
 import * as XLSX from 'xlsx';
-
 import { SharedModule } from '../shared/shared.module';
 import { ClientDetailComponent } from '../client-detail/client-detail.component';
+import { ClientSummary } from '../models/client_summary';
+import { ContractDetailComponent } from '../contract-detail/contract-detail.component';
+
+@Injectable({
+  providedIn: 'root'
+})
 @Component({
   selector: 'app-clients',
   standalone: true,
@@ -31,8 +36,8 @@ export class ClientsComponent {
   totalClients: number = 0;
   searchText: string = '';
   response: any;
-
-  
+  clientSumaryList: ClientSummary[] = [];
+  statusColor = '';
   
   handleChildEvent(event: any) {
     console.log('Evento recibido del hijo:', event);
@@ -40,6 +45,7 @@ export class ClientsComponent {
 //Se inicializa el componente cliente
   ngOnInit(): void {
    this.loadClients(); 
+
 }
 
 // abrimos la modal para crear un nuevo cliente
@@ -89,10 +95,9 @@ loadClients() {
       // Actualiza total de clientes
       this.totalClients = this.clientList.length;
       this.filterClientsList = this.clientList;
-      // Si tiene message
-      if (data.message) {
-        // alert(data.message);
-      }
+  
+
+      
     },
     error: (error: any) => {
       console.error('ERROR AL CARGAR CLIENTES:', error);
@@ -104,5 +109,12 @@ openUpdateClientModal(client: Client) {
   const dialogRef = this.dialog.open(ClientDetailComponent, {
     data: client,
   });
+}
+//asignamos un contrato desde la vista de clientes
+assignContract(client: Client) {
+  this.clientEvent.emit(client);
+  const dialogRef = this.dialog.open(ContractDetailComponent, {
+    data: client,
+  })
 }
 }

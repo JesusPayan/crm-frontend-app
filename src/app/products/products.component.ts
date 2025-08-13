@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -12,8 +12,12 @@ import { FormsModule,NgModel,FormControl,ReactiveFormsModule, } from '@angular/f
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { allowedNodeEnvironmentFlags } from 'process';
+import { ProductSummary } from '../models/product_summary';
 import * as XLSX from 'xlsx';
 
+@Injectable({
+  providedIn: 'root'
+})
 @Component({
   selector: 'app-products',
   standalone: true,
@@ -27,8 +31,8 @@ export class ProductsComponent {
     // this.productService.getProducts().subscribe(console.log);
   }
   filteredProducts:Product[] = [];
-
   productList:Product[] = [];
+  productSummaryList:ProductSummary[] = [];
 
   available: number = 0;
   nextToExpire = 2;
@@ -76,6 +80,7 @@ export class ProductsComponent {
               this.filteredProducts = this.productList;
               this.total_products = this.productList.length;
               this.populateHeaders();
+              
             },
             error: (error: any) =>{
               console.error(error);
