@@ -95,26 +95,7 @@ loadClients() {
       // Actualiza total de clientes
       this.totalClients = this.clientList.length;
       this.filterClientsList = this.clientList;
-      
-        
-      // try {
-      //   //mapeamos hacemos una sublistas para no hacer un hit adicional a la api
-      //   const clientSummaryList = this.clientList.map(client => ({
-      //     id: client.id,
-      //     cve_internal: client.cve_internal,
-      //     name: client.name,
-      //     father_lastname: client.father_lastname,
-      //     mother_lastname: client.mother_lastname,
-      //     email1: client.email1,
-      //     telephone1: client.telephone1
-      //   }))
-      //   //convertimos la lista en un json para utilizarlo en otro componente
-      //   this.clientSumaryList = JSON.parse(JSON.stringify(clientSummaryList));
-      //   localStorage.setItem('clientSumaryList', JSON.stringify(this.clientSumaryList));
-      // } catch (error) {
-      //   console.error('Error al obtener la lista de clientes:', error);
-      // }
-      
+  
 
       
     },
