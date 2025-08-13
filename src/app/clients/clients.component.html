@@ -1,35 +1,5 @@
 <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 antialiased">
     <div class="mx-auto max-w-screen-2xl px-4 lg:px-12">
-        <!-- <div class="container px-5 py-10 mx-auto bg-gray-900 shadow-lg text-white" id="headers">
-            <div class="container px-5 py-10 mx-auto" id="inner-container">
-                <div class="flex flex-wrap -m-1 items-center justify-center">
-                    <div class="lg:w-1/6 md:w-1/2 ml-5 mr-5 p-4 w-full  text-white hover:opacity-100 shadow-lg {{headerList[0].bgColor}} rounded-xl">
-                        <div class="mt-3 text-center">
-                        <h1 class="title-font text-3xl font-medium">Disponibles</h1>
-                        <h2 class="title-font text-xl font-medium">{{this.available}}</h2>
-                        </div>
-                    </div>
-                    <div class="lg:w-1/6 md:w-1/2 ml-5 mr-5 p-4 w-full  text-white hover:opacity-100 shadow-lg {{headerList[1].bgColor}} rounded-xl">  
-                        <div class="mt-3 text-center">
-                        <h1 class="title-font text-3xl font-medium">Prox. a vencer</h1>
-                        <h2 class="title-font text-xl font-medium">{{this.nextToExpire}}</h2>
-                        </div>
-                    </div>
-                    <div class="lg:w-1/6 md:w-1/2 ml-5 mr-5 p-4 w-full  text-white hover:opacity-100 shadow-lg {{headerList[2].bgColor}} rounded-xl">  
-                        <div class="mt-3 text-center">
-                        <h1 class="title-font text-3xl font-medium">Contratados</h1>
-                        <h2 class="title-font text-xl font-medium">{{this.contracted}}</h2>
-                        </div>
-                    </div>
-                    <div class="lg:w-1/6 md:w-1/2 ml-5 mr-5 p-4 w-full  text-white hover:opacity-100 shadow-lg {{headerList[3].bgColor}} rounded-xl">  
-                        <div class="mt-3 text-center">
-                        <h1 class="title-font text-3xl font-medium">Total Clientes</h1>
-                        <h2 class="title-font text-xl font-medium">{{this.total_clients}}</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
         <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                 <div class="flex-1 flex items-center space-x-2">
@@ -58,25 +28,33 @@
                         </div>
                     </form>
                 </div>
-                <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                    <button type="button" id="createclientButton" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" (click)="openCreateClientModal()">
-                        <!-- <svg class="h-3.5 w-3.5 mr-1.5 -ml-1" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
-                        </svg> -->
-                        Agregar Cliente
+                <div  class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
+                    <button data-tooltip-target="add-client" type="button" id="createclientButton" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" (click)="openCreateClientModal()">
+                         <div id="add-client" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
+                            Agregar Cliente
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" d="M9 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4H7Zm8-1a1 1 0 0 1 1-1h1v-1a1 1 0 1 1 2 0v1h1a1 1 0 1 1 0 2h-1v1a1 1 0 1 1-2 0v-1h-1a1 1 0 0 1-1-1Z" clip-rule="evenodd"/>
+                        </svg>
                     </button>
-                    <button type="button" id="createclientButton"  class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
-                        <!-- <svg class="h-3.5 w-3.5 mr-1.5 -ml-1" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
-                        </svg> -->
+                    <button data-tooltip-target="import-clients" type="button" id="createclientButton"  class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                        <div id="import-clients" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
                         Importar Clientes
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 15v2a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2m-8 1V4m0 12-4-4m4 4 4-4"/>
+                        </svg>
                     </button>
-                    <button type="button" id="createclientButton"  class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"  (click)="exportClients()">
-                        <!-- <svg class="h-3.5 w-3.5 mr-1.5 -ml-1" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
-                        </svg> -->
-                        <i class="fi fi-rr-download"></i>
-                        Exportar Clientes
+                    <button data-tooltip-target="export-clients" type="button" id="createclientButton"  class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"  (click)="exportClients()">
+                        <div id="export-clients" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
+                            Exportar Productos
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 15v2a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2M12 4v12m0-12 4 4m-4-4L8 8"/>
+                        </svg>
                     </button>
                 </div>
             </div>
@@ -84,12 +62,6 @@
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 text-center">
                         <tr>
-                            <th scope="col" class="p-4">
-                                <div class="flex items-center">
-                                    <input id="checkbox-all" type="checkbox" class="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                    <label for="checkbox-all" class="sr-only">checkbox</label>
-                                </div>
-                            </th>
                             <th scope="col" class="p-4">CVE</th>
                             <th scope="col" class="p-4">Nombre</th>
                             <th scope="col" class="p-4">Telefono</th>
@@ -101,33 +73,16 @@
                     </thead>
                     <tbody>
                         <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-900" *ngFor="let client of filterClientsList">
-                            <td class="p-4 w-4">
-                                <div class="flex items-center">
-                                    <input id="checkbox-table-search-1" type="checkbox" onclick="event.stopPropagation()" class="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                </div>
-                            </td>
-                            <!-- <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <div class="flex items-center mr-3"> {{client.cve_internal}} </div>
-                            </th> -->
-                            <!-- <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <div class="flex items-center">
-                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-red-700"></div>
-                                    {{client.name}}
-                                </div>
-                            </td> -->
-                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{client.cve_internal}}</td>
-                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{client.name}} {{client.father_lastname}} {{client.mother_lastname}} </td>
-                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{client.telephone1}}</td>
-                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{client.email1}}</td>
-                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{client.created_at | date: 'shortDate' }}</td>
-                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white " >
+                            <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{client.cve_internal}}</td>
+                            <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{client.name}} {{client.father_lastname}} {{client.mother_lastname}} </td>
+                            <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{client.telephone1}}</td>
+                            <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{client.email1}}</td>
+                            <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{client.created_at | date: 'shortDate' }}</td>
+                            <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white " >
                                 <div class="flex items-center text-center" [ngClass]="{'text-green-600': client.status_desc === 'Activo','text-red-600': client.status_desc === 'Inactivo'}">
                                     {{client.status_desc}}
                                 </div>
                             </td>
-                            <!-- <td class="px-4 py-3">{{client.email1}}</td>
-                            <td class="px-4 py-3">{{client.telephone1}}</td> -->
                             <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <div class="flex items-center space-x-4">
                                     <button (click)="openUpdateClientModal(client)" type="button" data-drawer-target="drawer-update-client" data-drawer-show="drawer-update-client" aria-controls="drawer-update-client" class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
