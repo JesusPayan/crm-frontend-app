@@ -10,6 +10,9 @@ import { SharedModule } from '../shared/shared.module';
 import { ClientDetailComponent } from '../client-detail/client-detail.component';
 import { ClientSummary } from '../models/client_summary';
 import { ContractDetailComponent } from '../contract-detail/contract-detail.component';
+import { SideNavBarComponent } from '../side-nav-bar/side-nav-bar.component';
+import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +29,9 @@ import { ContractDetailComponent } from '../contract-detail/contract-detail.comp
 
 export class ClientsComponent {
   @Output() clientEvent = new EventEmitter<Client>();
-  constructor(public dialog: MatDialog, private clientService: ClientService) {
+
+  
+  constructor(public dialog: MatDialog, private clientService: ClientService,  private router: Router, private route: ActivatedRoute) {
     this.clientService.getClients().subscribe(console.log);
     
   }
@@ -38,14 +43,16 @@ export class ClientsComponent {
   response: any;
   clientSumaryList: ClientSummary[] = [];
   statusColor = '';
-  
+  showdashboardButtons = false;
   handleChildEvent(event: any) {
     console.log('Evento recibido del hijo:', event);
   }
 //Se inicializa el componente cliente
   ngOnInit(): void {
    this.loadClients(); 
-
+   this.route.queryParams.subscribe(params => {
+      this.showdashboardButtons = params['showButtons'] === 'true';
+    });
 }
 
 // abrimos la modal para crear un nuevo cliente
@@ -77,6 +84,9 @@ exportClients() {
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, 'Clientes');
   XLSX.writeFile(workbook, 'clientes.xlsx');
+}
+generateAndPrintPDF() {
+  
 }
 deleteClient(id:number) {
   

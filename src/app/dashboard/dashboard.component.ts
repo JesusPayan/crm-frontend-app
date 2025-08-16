@@ -22,34 +22,42 @@ export class DashboardComponent {
   response: any;
   ngOnInit(): void {
     this.getTransactions();
+    // this.calculateBalance();
   }
   constructor(private transactionService: TransactionService) { }
   searchText: string = '';
   transactionsList: Transaction[] = [];
   filterTransactionsList: Transaction[] = [];
+  tableHeaders: string[] = ['Tipo', 'Tipo de transaccion', 'Fecha', 'Estatus', 'Monto'];
+  totalTransactions: number = 0;
+  totalIngress: number = 0;
+  totalEgress: number = 0;
+  totalBalance: number = 0;
+  
+  
+  
 
    generatePDF() {
- alert('Generando PDF...');
-
-  const doc = new jsPDF();
+     alert('Generando PDF...');
+    const doc = new jsPDF();
 
   // Título
-  doc.setFontSize(18);
-  doc.text('Reporte de Transacciones', 14, 20);
-
-  // Fecha
-  doc.setFontSize(11);
-  doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 14, 30);
-
-  // Definir columnas de la tabla
-  const tableColumn = [
-    "ID",
-    "Tipo Transacción",
-    "Fecha",
-    "Descripción",
-    "Monto",
-    "Tipo Contrato"
-  ];
+    doc.setFontSize(18);
+    doc.text('Reporte de Transacciones', 14, 20);
+  
+    // Fecha
+    doc.setFontSize(11);
+    doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 14, 30);
+  
+    // Definir columnas de la tabla
+    const tableColumn = [
+      "ID",
+      "Tipo Transacción",
+      "Fecha",
+      "Descripción",
+      "Monto",
+      "Tipo Contrato"
+    ];
 
   // Crear filas de la tabla
   const tableRows: any[] = [];
@@ -114,6 +122,9 @@ generateAndPrintPDF() {
    
   getTransactions(): void {
     
+    this.totalEgress = 0;
+    this.totalIngress = 0;
+    
     this.transactionService.getTransactions().subscribe(
             {next: (data: any) => {
               
@@ -121,7 +132,21 @@ generateAndPrintPDF() {
               this.response = data;
               this.transactionsList = this.response.data;
               this.filterTransactionsList = this.transactionsList;
-
+              this.filterTransactionsList.forEach(transaction => {
+                if (transaction.Transaction_type_desc === 'Venta') {
+                  this.totalIngress += Number(transaction.Transaction_amount)
+                  
+                } else if (transaction.Transaction_type_desc === 'Compra') {
+                  
+                  this.totalEgress += Number(transaction.Transaction_amount)
+                }
+              })
+              console.log(this.totalEgress);
+              console.log(this.totalIngress);
+              this.totalBalance = this.totalIngress - this.totalEgress;
+              this.totalBalance = Math.round(this.totalBalance * 100) / 100;
+              this.totalTransactions = this.transactionsList.length;
+              console.log(this.totalBalance);
             },
             error: (error: any) =>{
               console.error(error);
@@ -129,8 +154,13 @@ generateAndPrintPDF() {
           });
   }
 filterTransaction(){
-  this.filterTransactionsList = this.transactionsList.filter(transaction => transaction.Transaction_description.toLowerCase().includes(this.searchText.toLowerCase()));
+  this.filterTransactionsList = this.transactionsList.filter(transaction =>
+    (transaction.Transaction_type_desc || '').toLowerCase().includes(this.searchText) ||
+    (transaction.Transaction_description || '').toLowerCase().includes(this.searchText) ||
+    (transaction.contract_type_desc || '').toLowerCase().includes(this.searchText)
+  );
 }
+
 }
 
 

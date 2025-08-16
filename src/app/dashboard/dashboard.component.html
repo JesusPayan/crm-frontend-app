@@ -2,11 +2,17 @@
     <div class="mx-auto max-w-screen-2xl px-4 lg:px-12">
         <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-                <div class="flex-1 flex items-center space-x-2">
-                    <h1>
-                        <span class="text-gray-500">Reporte</span>
-                        <span class="dark:text-white"> Transacciones</span>
-                    </h1>
+                 <!-- <div class="flex flex-col md:flex-row items-stretch md:items-center md:space-x-3 space-y-3 md:space-y-0 justify-between mx-4 py-4 border-t dark:border-gray-700"> -->
+                <div class="w-full md:w-1/2">
+                    <span class="dark:text-white text-2xl">Transacciones: {{totalTransactions}}</span> 
+                    <div class="w-full md:w-1/2 flex flex-col md:flex-row items-stretch md:items-end md:space-x-3 space-y-3 md:space-y-0 text-xl mt-3 mb-3">
+                        <span class="text-white">Ingresos:</span>
+                        <span class=" ml-2 text-green-600">${{totalIngress}}</span>
+                        <span class="text-white ml-5">Egresos:</span>
+                        <span class="ml-2 text-red-600">${{totalEgress}}</span>
+                        <span class="text-white ml-5">Balance:</span>
+                        <span class="text-white ml-2" ngClass="totalBalance > 0 ? 'text-green-600' : 'text-red-600'">${{totalBalance}}</span>
+                    </div>
                 </div>
             </div>
             <div class="flex flex-col md:flex-row items-stretch md:items-center md:space-x-3 space-y-3 md:space-y-0 justify-between mx-4 py-4 border-t dark:border-gray-700">
@@ -19,12 +25,12 @@
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
                                 </svg>
                             </div>
-                            <input [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" (input)="filterTransaction()" type="text" id="simple-search" placeholder="Search for clients" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" >
+                            <input [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" (input)="filterTransaction()" type="text" id="simple-search" placeholder="Transacciones (compras, ventas)" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" >
                         </div>
                     </form>
                 </div>
-                <div class="w-full md:w-1/2 flex flex-col md:flex-row items-stretch md:items-end md:space-x-3 space-y-3 md:space-y-0">
-                    <button (click)="generatePDF()" data-tooltip-target="export-report" type="button" id="createclientButton" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" >
+                <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
+                    <button  data-tooltip-target="export-report" type="button" id="createclientButton" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" >
                                 <div id="export-report" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
                                     Exportar Reporte
                                     <div class="tooltip-arrow" data-popper-arrow></div>
@@ -32,34 +38,29 @@
                                 <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                     <path fill-rule="evenodd" d="M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2 2 2 0 0 0 2 2h12a2 2 0 0 0 2-2 2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2V4a2 2 0 0 0-2-2h-7Zm-6 9a1 1 0 0 0-1 1v5a1 1 0 1 0 2 0v-1h.5a2.5 2.5 0 0 0 0-5H5Zm1.5 3H6v-1h.5a.5.5 0 0 1 0 1Zm4.5-3a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h1.376A2.626 2.626 0 0 0 15 15.375v-1.75A2.626 2.626 0 0 0 12.375 11H11Zm1 5v-3h.375a.626.626 0 0 1 .625.626v1.748a.625.625 0 0 1-.626.626H12Zm5-5a1 1 0 0 0-1 1v5a1 1 0 1 0 2 0v-1h1a1 1 0 1 0 0-2h-1v-1h1a1 1 0 1 0 0-2h-2Z" clip-rule="evenodd"/>
                                 </svg>
-                    </button>
+                                </button>
                     <button (click)="generateAndPrintPDF()" data-tooltip-target="print-report" type="button" id="createclientButton" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" >
-                                <div id="print-report" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                                    Imprimir Reporte
-                                    <div class="tooltip-arrow" data-popper-arrow></div>
-                                </div>
-                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                    <path fill-rule="evenodd" d="M8 3a2 2 0 0 0-2 2v3h12V5a2 2 0 0 0-2-2H8Zm-3 7a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h1v-4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v4h1a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2H5Zm4 11a1 1 0 0 1-1-1v-4h8v4a1 1 0 0 1-1 1H9Z" clip-rule="evenodd"/>
-                                </svg>
+                                    <div id="print-report" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
+                                        Imprimir Reporte
+                                        <div class="tooltip-arrow" data-popper-arrow></div>
+                                    </div>
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                        <path fill-rule="evenodd" d="M8 3a2 2 0 0 0-2 2v3h12V5a2 2 0 0 0-2-2H8Zm-3 7a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h1v-4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v4h1a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2H5Zm4 11a1 1 0 0 1-1-1v-4h8v4a1 1 0 0 1-1 1H9Z" clip-rule="evenodd"/>
+                                    </svg>
                     </button>
                 </div>
             </div>
-        </div>
+
+            </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 text-center">
-                        <tr>
-                            <th scope="col" class="p-4">Tipo</th>
-                            <th scope="col" class="p-4">Fecha</th>
-                            <th scope="col" class="p-4">Estatus</th>
-                            <th scope="col" class="p-4">Correo</th>
-                            <th scope="col" class="p-4">Fecha Creacion</th>
-                            <th scope="col" class="p-4">Estatus</th>
-                            <th scope="col" class="p-5">Acciones</th>
+                        <tr> 
+                            <th scope="col" class="p-4 text-center" *ngFor="let header of tableHeaders" >{{header}}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-900" *ngFor="let transaction of filterTransactionsList">
+                        <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-900 text-center"  *ngFor="let transaction of filterTransactionsList">
                             <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{transaction.id}}</td>
                             <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white" [ngClass]="{'text-green-600': transaction.contract_type_desc === 'Venta','text-red-600': transaction.contract_type_desc === 'Compra'}">{{transaction.Transaction_type_desc}}</td>
                             <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{transaction.Transaction_date | date: 'shortDate' }}</td>
@@ -69,6 +70,8 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
+            </div>  
         </div>
+
+        <!-- </div> -->
 </section>

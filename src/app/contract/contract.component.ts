@@ -39,6 +39,7 @@ export class ContractComponent {
     {title: this.contracted, description: 'Contratados',image: 'https://dummyimage.com/600x400/000/fff', bgColor: 'bg-blue-500', textColor: 'text-blue-500'},
     {title: this.totalContracts, description: 'Total productos',image: 'https://dummyimage.com/600x400/000/fff', bgColor: 'bg-orange-500',  textColor: 'text-stone-900'},
   ];
+  
   ngOnInit(): void {
     this.contractService.getContracts_summary().subscribe(
             {next: (data: any) => {
