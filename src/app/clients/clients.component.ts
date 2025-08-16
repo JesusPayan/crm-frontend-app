@@ -13,6 +13,7 @@ import { ContractDetailComponent } from '../contract-detail/contract-detail.comp
 import { SideNavBarComponent } from '../side-nav-bar/side-nav-bar.component';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { ImportModalComponent } from '../import-modal/import-modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -58,6 +59,11 @@ export class ClientsComponent {
 // abrimos la modal para crear un nuevo cliente
 openCreateClientModal() {
   const dialogRef = this.dialog.open(ClientDetailComponent);
+}
+openModalImportClients(){
+  const dialogRef = this.dialog.open(ImportModalComponent, {
+    data: 'clients',
+  });
 }
 //flitramos los clientes por nombre, apellido, email, telefono  
 filterClients() {
