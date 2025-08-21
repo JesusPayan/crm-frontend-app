@@ -14,7 +14,8 @@ import { SideNavBarComponent } from '../side-nav-bar/side-nav-bar.component';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { ImportModalComponent } from '../import-modal/import-modal.component';
-
+import { jsPDF } from "jspdf";
+import autoTablePlugin from 'jspdf-autotable'
 @Injectable({
   providedIn: 'root'
 })
@@ -91,8 +92,89 @@ exportClients() {
   XLSX.utils.book_append_sheet(workbook, worksheet, 'Clientes');
   XLSX.writeFile(workbook, 'clientes.xlsx');
 }
-generateAndPrintPDF() {
+generatePDF() {
+     alert('Generando PDF...');
+    const doc = new jsPDF();
+
+  // Título
+    doc.setFontSize(18);
+    doc.text('Reporte de Clientes', 14, 20);
   
+    // Fecha
+    doc.setFontSize(11);
+    doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 14, 30);
+  
+    // Definir columnas de la tabla
+    const tableColumn = [
+      "CVE",	"Nombre",	"Apellido Paterno",	"Apellido Materno",	"Telefono",	"Correo",	"Fecha Creacion","Estatus"
+    ];
+
+  // Crear filas de la tabla
+  const tableRows: any[] = [];
+
+  this.filterClientsList.forEach(item => {
+    const rowData = [
+      item.id,
+      item.name,
+      item.father_lastname,
+      item.mother_lastname,
+      item.telephone1,
+      item.email1,
+      item.created_at,
+      item.status_desc
+    ];
+    tableRows.push(rowData);
+  });
+
+  // Crear tabla en el PDF
+  autoTablePlugin(doc, {
+    head: [tableColumn],
+    body: tableRows,
+    startY: 40,
+    // theme: 'striped',
+    //headStyles: { fillColor: [0, 102, 204] }, // Azul encabezado
+    //styles: { fontSize: 10 }
+  });
+
+  // Guardar PDF
+  doc.save("reporte-transacciones.pdf");
+}
+generateAndPrintPDF() {
+  const doc = new jsPDF();
+
+  doc.setFontSize(18);
+  doc.text('Reporte de Transacciones', 14, 20);
+
+  const tableColumn = [
+      "CVE",	"Nombre",	"Apellido Paterno",	"Apellido Materno",	"Telefono",	"Correo",	"Fecha Creacion","Estatus"
+    ];
+  const tableRows: any[] = [];
+
+  this.filterClientsList.forEach(item => {
+    const rowData = [
+      item.id,
+      item.name,
+      item.father_lastname,
+      item.mother_lastname,
+      item.telephone1,
+      item.email1,
+      item.created_at,
+      item.status_desc
+    ];
+    tableRows.push(rowData);
+  });
+
+  autoTablePlugin(doc, {
+    head: [tableColumn],
+    body: tableRows,
+    startY: 30,
+    theme: 'striped'
+  });
+
+  // Abre el PDF en una nueva pestaña y lo manda a imprimir
+  const pdfBlob = doc.output('bloburl');
+  const printWindow = window.open(pdfBlob);
+  printWindow?.print();
 }
 deleteClient(id:number) {
   

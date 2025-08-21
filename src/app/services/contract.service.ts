@@ -14,7 +14,14 @@ export class ContractService {
   createNewContract(contractData: FormData): Observable<any> {
     return this.http.post('http://127.0.0.1:5000/v1/contracts/create_contract', contractData);
   }
-  renovateContract(id: number): Observable<any> {
-    return this.http.post('http://127.0.0.1:5000/v1/contracts/renovate_contract/', id);
+  renovateContract(id: number,loggedUser:string): Observable<any> {
+    // return this.http.post('http://127.0.0.1:5000/v1/contracts/renovate_contract/{id}', id);
+    return this.http.put(`http://127.0.0.1:5000/v1/contracts/renovate_contract/${id}`,loggedUser);
+  }
+  deleteContract(id: number): Observable<any> {
+    return this.http.delete(`http://127.0.0.1:5000/v1/contracts/delete_contract/${id}`);
+  }
+  updateDayleft(){
+    return this.http.put('http://127.0.0.1:5000/v1/contracts/update_day_left',null);
   }
 }

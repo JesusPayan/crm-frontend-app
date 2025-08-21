@@ -23,4 +23,7 @@ export class ProductService {
   updateProduct(productData: FormData): Observable<any> {
     return this.http.put(`http://127.0.0.1:5000/v1/products/update_product`, productData);
   }
+  importProducts(productData: FormData): Observable<any> {
+    return this.http.post('http://127.0.0.1:5000/v1/products/import_products', productData);
+  }
 }

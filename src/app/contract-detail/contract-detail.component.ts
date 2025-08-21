@@ -103,11 +103,10 @@ export class ContractDetailComponent {
     this.contractService.createNewContract(newContract).subscribe((data) => {
       this.response = data;
       console.log(this.response);
+
       alert(this.response.message);
-      alert(this.response.data);
       this.closeModal();
-      alert("Contrato guardado exitosamente");
-      this.router.navigate(['/contracts-component']);
+      
     });
     
     

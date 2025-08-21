@@ -2,7 +2,7 @@ import { Component , Inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ClientService } from '../services/client.service';
-
+import { ProductService } from '../services/product.service';
 
 
 @Component({
@@ -14,9 +14,13 @@ import { ClientService } from '../services/client.service';
 })
 export class ImportModalComponent {
   caller: string = '';
-  constructor(private dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: string , private clientService: ClientService){ 
-    if (data ) {
-      this.caller = data;
+  constructor(private dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: string , private clientService: ClientService, private productService: ProductService) {
+    this.caller = data;
+  }
+    
+  ngOnInit(): void {
+    if (this.data ) {
+      this.caller = this.data;
     }
    }
     selectedFile: File | null = null;
@@ -28,28 +32,48 @@ export class ImportModalComponent {
   }
   onSubmit(): void {
     const formData = new FormData();
-
+  // Validamos si se cargo un archivo    
+  formData.append('file', this.selectedFile!);
     if (this.selectedFile) {
       console.log('Se ha seleccionado un archivo:', this.selectedFile.name);
       formData.append('file', this.selectedFile, this.selectedFile.name);
+      // se define si el que llamo es clientes o productos
       if (this.caller == 'clients') {
-        console.log("Se va a importar los clientes");
-        this.clientService.importClients(formData).subscribe({
-      next: (res) => {
-          console.log(res.message);
-          alert(res.message);
-          this.closeModal();
-      },
-
-      error: (error) => {
-        console.error(error);
-      }
-    })
-
+        if (this.selectedFile.name != 'clients.csv') {
+          alert("El archivo seleccionado no es el correcto, debe ser 'clients.csv'");
+        }else{
+          console.log("Se va a importaran clientes");
+          this.clientService.importClients(formData).subscribe({
+          next: (res) => {
+              console.log(res.message);
+              alert(res.message);
+              this.closeModal();
+          },
+          error: (error) => {
+            console.error(error);
+          }
+          })
+        }  
       }else if (this.caller == 'products') {
-        console.log("Se va a importar los productos");
+        if (this.selectedFile.name != 'products.csv') {
+          alert("El archivo seleccionado no es el correcto, debe ser 'products.csv'");
+        }else{
+          console.log("Se va a importar los productos");
+          this.productService.importProducts(formData).subscribe({
+          next: (res) => {
+              console.log(res.message);
+              alert(res.message);
+              this.closeModal();
+          },
+          error: (error) => {
+            console.error(error);
+          }
+        })
       }
-    }else{
+        }
+        
+    }
+    else{
       console.log('No se ha seleccionado un archivo.');
       alert('No se ha seleccionado un archivo.');
     }

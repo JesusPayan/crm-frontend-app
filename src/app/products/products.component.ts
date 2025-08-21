@@ -14,7 +14,8 @@ import { SharedModule } from '../shared/shared.module';
 import { allowedNodeEnvironmentFlags } from 'process';
 import { ProductSummary } from '../models/product_summary';
 import * as XLSX from 'xlsx';
-
+import { ImportModalComponent } from '../import-modal/import-modal.component';
+import { ActivatedRoute } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
@@ -27,7 +28,7 @@ import * as XLSX from 'xlsx';
 })
 export class ProductsComponent {
   searchControl = new FormControl('');
-  constructor(public dialog: MatDialog, private router: Router, private productService: ProductService) {
+  constructor(public dialog: MatDialog, private router: Router, private productService: ProductService,private route: ActivatedRoute) {
     // this.productService.getProducts().subscribe(console.log);
   }
   filteredProducts:Product[] = [];
@@ -40,7 +41,7 @@ export class ProductsComponent {
   total_products = this.productList.length;
   response: any;
   searchText: string = '';
- 
+ showdashboardButtons = false;
   //Poblamos los encabezados de la app
   populateHeaders() {
     
@@ -51,7 +52,6 @@ export class ProductsComponent {
         this.nextToExpire = this.nextToExpire + this.productList[i].available_profiles
       }
     }
-
   }
   // #filtramos los productos por cve interna o descripcion
 
@@ -67,8 +67,12 @@ export class ProductsComponent {
   );
   
   }
+  generateAndPrintPDF() {
   
-
+}
+  openModalProductsImport(){
+    const dialogRef = this.dialog.open(ImportModalComponent, {data: 'products'});
+  }
   
   ngOnInit(): void {
 
@@ -86,6 +90,10 @@ export class ProductsComponent {
               console.error(error);
             }
           });
+
+      this.route.queryParams.subscribe(params => {
+      this.showdashboardButtons = params['showButtons'] === 'true';
+    });
   }  
 
    headerList: Header[] = [
