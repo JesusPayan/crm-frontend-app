@@ -12,10 +12,13 @@ export class TransactionService {
 
 constructor(private http: HttpClient) { }
 
-getTransactions(): Observable<any> {
-  return this.http.get('http://127.0.0.1:5000/v1/transactions/get_transactions');
-}
-getBalance(): Observable<any> {
-  return this.http.get('http://127.0.0.1:5000/v1/transactions/get_balance');
+  getTransactions(): Observable<any> {
+    return this.http.get('http://127.0.0.1:5000/v1/transactions/get_transactions');
+  }
+  getBalance(): Observable<any> {
+    return this.http.get('http://127.0.0.1:5000/v1/transactions/get_balance');
+  }
+  addFunds(formData: FormData): Observable<any> {
+  return this.http.post<any>('http://127.0.0.1:5000/v1/transactions/add_funds', formData);
 }
 }

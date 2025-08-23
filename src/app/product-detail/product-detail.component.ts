@@ -40,8 +40,8 @@ export class ProductDetailComponent {
     updated_by : '',
     access_identifier : '',
     access_password : '',
-    expiration_date : new Date()
-
+    expiration_date : new Date(),
+    comments : ''
   };
 streamingProducts: any[] = [
   
@@ -83,27 +83,31 @@ loggedUser = 'admin';
   }
   onSubmit(): void {
     const formData = new FormData();
-    if (this.selectedFile) {
-      formData.append('image', this.selectedFile, this.selectedFile.name);
+    if (!this.selectedFile) {
+      alert("Debe seleccionar una imagen");
     }
-    formData.append('description', this.product.description);
-    formData.append('investment', this.product.investment.toString());
-    formData.append('client_profile_price', this.product.client_profile_price.toString());
-    formData.append('client_complete_price', this.product.client_complete_price.toString());
-    formData.append('product_profit_profile', this.product.product_profit_profile.toString());
-    formData.append('product_profit_per_complete', this.product.product_profit_per_complete.toString());
-    formData.append('total_profiles', this.product.total_profiles.toString());
-    formData.append('active_profiles', this.product.active_profiles.toString());
-    formData.append('available_profiles', this.product.available_profiles.toString());
-    formData.append('status', this.product.status.toString());
-    formData.append('status_desc', this.product.status_desc);
-    formData.append('created_at', this.product.created_at.toString());
-    formData.append('created_by', this.product.created_by);
-    formData.append('updated_at', this.product.updated_at.toString());
-    formData.append('updated_by', this.loggedUser);
-    formData.append('access_identifier', this.product.access_identifier);
-    formData.append('access_password', this.product.access_password);
-    formData.append('expiration_date', this.product.expiration_date.toString());
+    else{
+      formData.append('image', this.selectedFile, this.selectedFile.name);
+      formData.append('description', this.product.description);
+      formData.append('investment', this.product.investment.toString());
+      formData.append('client_profile_price', this.product.client_profile_price.toString());
+      formData.append('client_complete_price', this.product.client_complete_price.toString());
+      formData.append('product_profit_profile', this.product.product_profit_profile.toString());
+      formData.append('product_profit_per_complete', this.product.product_profit_per_complete.toString());
+      formData.append('total_profiles', this.product.total_profiles.toString());
+      formData.append('active_profiles', this.product.active_profiles.toString());
+      formData.append('available_profiles', this.product.available_profiles.toString());
+      formData.append('status', this.product.status.toString());
+      formData.append('status_desc', this.product.status_desc);
+      formData.append('created_at', this.product.created_at.toString());
+      formData.append('created_by', this.product.created_by);
+      formData.append('updated_at', this.product.updated_at.toString());
+      formData.append('updated_by', this.loggedUser);
+      formData.append('access_identifier', this.product.access_identifier);
+      formData.append('access_password', this.product.access_password);
+      formData.append('expiration_date', this.product.expiration_date.toString());
+      formData.append('cve_internal', this.product.cve_internal);
+    }
 
     // Enviar al backend
     this.productService.createNewProduct(formData).subscribe({

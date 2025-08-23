@@ -19,6 +19,7 @@ export interface Product {
     updated_by : string;
     access_identifier : string;
     access_password : string;
+    comments : string;
     expiration_date : Date;
 }
 

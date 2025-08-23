@@ -88,32 +88,31 @@ export class ContractComponent {
   
     // Título
       doc.setFontSize(18);
-      doc.text('Reporte de Clientes', 14, 20);
+      doc.text('Reporte de contratos', 14, 20);
     
       // Fecha
-      doc.setFontSize(11);
+      doc.setFontSize(10);
       doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 14, 30);
     
       // Definir columnas de la tabla
      
   
     const tableColumn = [
-        "ID",	"Nombre",	"Apellido Paterno",	"Apellido Materno",	"Producto",	"Correo",	"Contraseña",	"Estatus",	"Fecha de Inicio",	"Fecha de Fin",	"Dias Restantes",	"Precio",	"Tipo"
+        "Nombre",	"Apellido Paterno",	"Apellido Materno",	"Producto",	"Correo",	"Estatus",	"Dias Restantes",	"Precio",	"Tipo"
       ];
     const tableRows: any[] = [];
   
     this.filteredContracts.forEach(item => {
       const rowData = [
-        item.id,
+        // item.id,
         item.name,
         item.father_lastname,
         item.mother_lastname,
         item.Description,
         item.access_identifier,
-        item.access_password,
         item.status_desc,
-        item.start_date,
-        item.end_date,
+        // item.start_date,
+        // item.end_date,
         item.days_left,
         item.total_price,
         item.contract_type_desc
