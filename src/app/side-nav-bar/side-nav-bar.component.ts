@@ -53,6 +53,9 @@ export class SideNavBarComponent {
       case 'products-dashboard':
         this.router.navigate(['/product-component'], { queryParams: { showButtons: true } });  
       break;
+      case 'tickets-dashboard':
+        alert("Navegando a Soporte");
+        this.router.navigate(['/tickets-dashboard'], { queryParams: { showButtons: true } });
 
     }
 

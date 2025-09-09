@@ -8,7 +8,7 @@ import { ClientsComponent } from './clients/clients.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
-
+import { TicketDashboardComponent } from './ticket-dashboard/ticket-dashboard.component';
 
 export const routes: Routes = [
     {path: 'product-component', component: ProductsComponent },
@@ -20,10 +20,7 @@ export const routes: Routes = [
     {path: 'client-component', component: ClientsComponent },
     {path: 'dashboard-component', component: DashboardComponent },
     {path: 'product-detail', component: ProductDetailComponent },
-
-
-
- 
+    {path: 'tickets-dashboard', component: TicketDashboardComponent },
 
 ];
 

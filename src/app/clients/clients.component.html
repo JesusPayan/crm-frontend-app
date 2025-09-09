@@ -1,17 +1,20 @@
 <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 antialiased">
     <div class="mx-auto max-w-screen-2xl px-4 lg:px-12">
         <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
+            <h1 class="title-font text-4xl font-medium p-4 text-yellow-500">Estadisticas Clientes</h1>
             <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-                <div class="flex-1 flex items-center space-x-2">
-                    <h5>
-                        <span class="text-gray-500">Clientes: </span>
-                        <span class="dark:text-white">{{totalClients}}</span>
-                    </h5>
-                    <h5 class="text-gray-500 dark:text-gray-400 ml-1">1-100 ({{totalClients}})</h5>
-                    <div id="results-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                        Showing 1-100 of 436 results
-                        <div class="tooltip-arrow" data-popper-arrow=""></div>
-                    </div>
+                <!-- Encabezados que mostraran las estadisticas de los clientes -->
+                <!-- <div class="flex-1 row items-center space-x-2">
+                    <h1>
+                        <span class="text-gray-100 dark:text-gray-400">Estadisticas de Clientes </span>
+                    </h1>
+                    <div class="flex flex-row md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-1 flex-shrink-0 bg-gray-700 p-4"> -->
+                        <h2 class="text-gray-500 dark:text-gray-400 items-center y-2">
+                            <span class="text-gray-300 ml-2 bg-blue-700 p-4">Total:  {{totalClients}}</span>
+                            <span class="text-gray-300 ml-2 bg-green-700 p-4">Activos: {{activedClients}}</span>
+                            <span class="text-gray-300 ml-2 bg-red-700 p-4">Inactivos: {{inactivedClients}}</span>
+                        </h2>
+                    <!-- </div> -->
                 </div>
             </div>
             <div class="flex flex-col md:flex-row items-stretch md:items-center md:space-x-3 space-y-3 md:space-y-0 justify-between mx-4 py-4 border-t dark:border-gray-700">
@@ -30,7 +33,7 @@
                 </div>
                 <div  class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                     <button *ngIf="showdashboardButtons" data-tooltip-target="add-client" type="button" id="createclientButton" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" (click)="openCreateClientModal()">
-                         <div id="add-client" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
+                        <div id="add-client" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
                             Agregar Cliente
                             <div class="tooltip-arrow" data-popper-arrow></div>
                         </div>
@@ -53,7 +56,7 @@
                             <div class="tooltip-arrow" data-popper-arrow></div>
                         </div>
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 15v2a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2M12 4v12m0-12 4 4m-4-4L8 8"/>
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 15v2a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2M12 4v12m0-12 4 4m-4-4L8 8"/>
                         </svg>
                     </button>
                     <button (click)="generatePDF()" *ngIf="!showdashboardButtons" data-tooltip-target="export-report" type="button" id="createclientButton" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" >
@@ -80,38 +83,38 @@
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 text-center">
                         <tr>
-                            <th scope="col" class="p-4">CVE</th>
+                            <!-- <th scope="col" class="p-4">CVE</th> -->
                             <th scope="col" class="p-4">Nombre</th>
                             <th scope="col" class="p-4">Telefono</th>
                             <th scope="col" class="p-4">Correo</th>
                             <th scope="col" class="p-4">Fecha Creacion</th>
                             <th scope="col" class="p-4">Estatus</th>
-                            <th *ngIf="showdashboardButtons" scope="col" class="p-5">Acciones</th>
+                            <th *ngIf="showdashboardButtons" scope="col" class="p-4">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-900 text-center" *ngFor="let client of filterClientsList">
-                            <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{client.cve_internal}}</td>
+                            <!-- <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{client.cve_internal}}</td> -->
                             <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{client.name}} {{client.father_lastname}} {{client.mother_lastname}} </td>
                             <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{client.telephone1}}</td>
                             <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{client.email1}}</td>
                             <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{client.created_at | date: 'shortDate' }}</td>
-                            <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white " >
-                                <div class="flex items-center text-center" [ngClass]="{'text-green-600': client.status_desc === 'Activo','text-red-600': client.status_desc === 'Inactivo'}">
+                            <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap"  [ngClass]="{'text-green-600': client.status_desc === 'Activo','text-red-600': client.status_desc === 'Inactivo'}" >
+                                <!-- <div class="flex items-center" [ngClass]="{'text-green-600': client.status_desc === 'Activo','text-red-600': client.status_desc === 'Inactivo'}"> -->
                                     {{client.status_desc}}
-                                </div>
+                                <!-- </div> -->
                             </td>
-                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <td class="px-5 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <div class="flex items-center space-x-4" *ngIf="showdashboardButtons">
                                     <button (click)="openUpdateClientModal(client)" type="button" data-drawer-target="drawer-update-client" data-drawer-show="drawer-update-client" aria-controls="drawer-update-client" class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                        <path fill-rule="evenodd" d="M5 8a4 4 0 1 1 7.796 1.263l-2.533 2.534A4 4 0 0 1 5 8Zm4.06 5H7a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h2.172a2.999 2.999 0 0 1-.114-1.588l.674-3.372a3 3 0 0 1 .82-1.533L9.06 13Zm9.032-5a2.907 2.907 0 0 0-2.056.852L9.967 14.92a1 1 0 0 0-.273.51l-.675 3.373a1 1 0 0 0 1.177 1.177l3.372-.675a1 1 0 0 0 .511-.273l6.07-6.07a2.91 2.91 0 0 0-.944-4.742A2.907 2.907 0 0 0 18.092 8Z" clip-rule="evenodd"/>
+                                            <path fill-rule="evenodd" d="M5 8a4 4 0 1 1 7.796 1.263l-2.533 2.534A4 4 0 0 1 5 8Zm4.06 5H7a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h2.172a2.999 2.999 0 0 1-.114-1.588l.674-3.372a3 3 0 0 1 .82-1.533L9.06 13Zm9.032-5a2.907 2.907 0 0 0-2.056.852L9.967 14.92a1 1 0 0 0-.273.51l-.675 3.373a1 1 0 0 0 1.177 1.177l3.372-.675a1 1 0 0 0 .511-.273l6.07-6.07a2.91 2.91 0 0 0-.944-4.742A2.907 2.907 0 0 0 18.092 8Z" clip-rule="evenodd"/>
                                         </svg>
                                     </button>
                                     <button type="button" data-drawer-target="drawer-read-client-advanced" data-drawer-show="drawer-read-client-advanced" aria-controls="drawer-read-client-advanced" class="py-2 px-3 flex items-center text-sm font-medium text-center text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" (click)="assignContract(client)"  [disabled]="client.status_desc === 'Inactivo'">
                                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                        <path fill-rule="evenodd" d="M9 7V2.221a2 2 0 0 0-.5.365L4.586 6.5a2 2 0 0 0-.365.5H9Zm2 0V2h7a2 2 0 0 1 2 2v6.41A7.5 7.5 0 1 0 10.5 22H6a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Z" clip-rule="evenodd"/>
-                                        <path fill-rule="evenodd" d="M9 16a6 6 0 1 1 12 0 6 6 0 0 1-12 0Zm6-3a1 1 0 0 1 1 1v1h1a1 1 0 1 1 0 2h-1v1a1 1 0 1 1-2 0v-1h-1a1 1 0 1 1 0-2h1v-1a1 1 0 0 1 1-1Z" clip-rule="evenodd"/>
+                                            <path fill-rule="evenodd" d="M9 7V2.221a2 2 0 0 0-.5.365L4.586 6.5a2 2 0 0 0-.365.5H9Zm2 0V2h7a2 2 0 0 1 2 2v6.41A7.5 7.5 0 1 0 10.5 22H6a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Z" clip-rule="evenodd"/>
+                                            <path fill-rule="evenodd" d="M9 16a6 6 0 1 1 12 0 6 6 0 0 1-12 0Zm6-3a1 1 0 0 1 1 1v1h1a1 1 0 1 1 0 2h-1v1a1 1 0 1 1-2 0v-1h-1a1 1 0 1 1 0-2h1v-1a1 1 0 0 1 1-1Z" clip-rule="evenodd"/>
                                         </svg>
                                     </button>
                                     <button type="button"  data-modal-toggle="deleteModal" class="flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900" (click)="deleteClient(client.id)">
@@ -147,5 +150,5 @@
                 </ul>
             </nav>
         </div>
-    </div>
+    <!-- </div> -->
 </section>

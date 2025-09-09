@@ -46,12 +46,15 @@ export class ClientsComponent {
   clientSumaryList: ClientSummary[] = [];
   statusColor = '';
   showdashboardButtons = false;
+  activedClients: number = 0;
+  inactivedClients: number = 0;
   handleChildEvent(event: any) {
     console.log('Evento recibido del hijo:', event);
   }
 //Se inicializa el componente cliente
   ngOnInit(): void {
    this.loadClients(); 
+   /*Con esto podemos activar o desactivar los botones dependiendo de donde son llamados*/ 
    this.route.queryParams.subscribe(params => {
       this.showdashboardButtons = params['showButtons'] === 'true';
     });
@@ -193,7 +196,14 @@ loadClients() {
       // Actualiza total de clientes
       this.totalClients = this.clientList.length;
       this.filterClientsList = this.clientList;
-  
+      for(let i = 0; i < this.filterClientsList.length; i++) {
+                    if (this.filterClientsList[i].status_desc === 'Activo') {
+                      this.activedClients = this.activedClients + 1;
+                    }
+                    if (this.filterClientsList[i].status_desc === 'Inactivo') {
+                      this.inactivedClients = this.inactivedClients + 1;
+                    }
+              }
 
       
     },
