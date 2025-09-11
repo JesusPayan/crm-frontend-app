@@ -4,9 +4,9 @@ export interface TicketDetail {
     description: string;
     priority: 'Low' | 'Medium' | 'High' | 'Critical';
     status: 'Open' | 'In Progress' | 'Resolved' | 'Closed';
-    createdAt: Date;
-    updatedAt: Date;
-    assignedTo: string;
+    created_at: Date;
+    updated_at: Date;
+    assignedTo: number;
     createdBy: string;
     attachments?: string[]; // URLs or file paths to attachments
 }    
