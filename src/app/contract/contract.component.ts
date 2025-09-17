@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Contract } from '../models/contract';
 import { Header } from '../models/header';
 import { response, Router } from 'express';
-import { FormsModule,NgModel,FormControl,ReactiveFormsModule, } from '@angular/forms';
+import { FormsModule,NgModel,FormControl,ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import {ContractSummary} from '../models/contractSummary';
@@ -14,6 +14,9 @@ import { ContractDetailComponent } from '../contract-detail/contract-detail.comp
 import { ActivatedRoute } from '@angular/router';
 import { jsPDF } from "jspdf";
 import autoTablePlugin from 'jspdf-autotable'
+import  {FilterOption} from '../models/filterOption';
+import { Client } from '../models/client';
+import { concat } from 'rxjs';
 @Component({
   selector: 'app-contract',
   standalone: true,
@@ -27,6 +30,13 @@ export class ContractComponent {
   searchText: string = '';
   filteredContracts: ContractSummary[] = [];
   contractList: ContractSummary[] = [];
+  filterOptions: FilterOption[] = [
+    { id: 1, category: 'Todos' },
+    { id: 2, category: 'Activos' },
+    { id: 3, category: 'Proximos a vencer' },
+    { id: 4, category: 'Vencidos' }
+  ]
+  clientList: Client[] = [];
   totalContracts: number = 0;
   nextToExpire: number = 0;
   available: number = 0;
@@ -34,16 +44,25 @@ export class ContractComponent {
   response: any;
   telephone: string = '';
   message: string = '';
-  loggedUser = 'Admin';
+  statusCriteria: String = '';
+  loggedUser: string = '';
+  category: string = '';
+  currentName: string = '';
+  clientName:Client []  =  []; 
+  accessIndentifier: string = '';
+  productContrated: string = '';
+  contractType: string = ''
+  // logged
+  
   showdashboardButtons = false;
   //Inicializamos el componente e inyectamos dependencias
   constructor(public dialog: MatDialog,public contractService: ContractService, private route: ActivatedRoute) { }
-   headerList: Header[] = [
-    {title: this.available, description: 'Disponibles',image: 'https://dummyimage.com/600x400/000/fff', bgColor: 'bg-green-500', textColor: 'text-green-500'},
-    {title: this.nextToExpire, description: 'Proximos a vencer',image: 'https://dummyimage.com/600x400/000/fff', bgColor: 'bg-red-500', textColor: 'text-red-900'},
-    {title: this.contracted, description: 'Contratados',image: 'https://dummyimage.com/600x400/000/fff', bgColor: 'bg-blue-500', textColor: 'text-blue-500'},
-    {title: this.totalContracts, description: 'Total productos',image: 'https://dummyimage.com/600x400/000/fff', bgColor: 'bg-orange-500',  textColor: 'text-stone-900'},
-  ];
+  //  headerList: Header[] = [
+  //   {title: this.available, description: 'Disponibles',image: 'https://dummyimage.com/600x400/000/fff', bgColor: 'bg-green-500', textColor: 'text-green-500'},
+  //   {title: this.nextToExpire, description: 'Proximos a vencer',image: 'https://dummyimage.com/600x400/000/fff', bgColor: 'bg-red-500', textColor: 'text-red-900'},
+  //   {title: this.contracted, description: 'Contratados',image: 'https://dummyimage.com/600x400/000/fff', bgColor: 'bg-blue-500', textColor: 'text-blue-500'},
+  //   {title: this.totalContracts, description: 'Total productos',image: 'https://dummyimage.com/600x400/000/fff', bgColor: 'bg-orange-500',  textColor: 'text-stone-900'},
+  // ];
   
   ngOnInit(): void {
       this.contractService.updateDayleft().subscribe(console.log);
@@ -53,32 +72,30 @@ export class ContractComponent {
         this.showdashboardButtons = params['showButtons'] === 'true';
       });
   }
+  onSelectionChangeStatus(filterCriteria: string,) {
+          // this.statusCriteria = filterCriteria;
+          
+          this.filteredContracts = this.contractList.filter(item => item.status_desc === filterCriteria.toString());
+  }
+  // onSelectionChangeClientName(clientName: string) {
+  //         // this.clientName = clientName;
+  //         console.log(clientName.toString().toLowerCase());
+  //         this.filteredContracts = this.contractList.filter(item => 
+  //           (item.name.toLowerCase() + item.father_lastname.toLowerCase() + item.mother_lastname.toLowerCase())==(clientName.toString().toLowerCase()));
+  // }
+  onSelectionChangeAccessIdentifier(accessIndentifier: string) {
+          // this.accessIndentifier = accessIndentifier;
+          
+          this.filteredContracts = this.contractList.filter(item => item.access_identifier.toLowerCase() === accessIndentifier.toString().toLowerCase());
+  }
+  onSelectionChangeProduct(productContrated: string) {
+          // this.productContrated = productContrated;
+          
+          this.filteredContracts = this.contractList.filter(item => item.Description.toLowerCase() === productContrated.toString().toLowerCase());
+  }
 
-  filterContracts() {
-    const term = this.searchText.toLowerCase().trim();
-    if (!term) {
-      this.filteredContracts = this.contractList;
-      return;
-    }
-    this.filteredContracts = this.contractList.filter(contract =>
-      contract.name.toString().includes(term) ||
-      contract.father_lastname.toString().includes(term) ||
-      contract.mother_lastname.toString().includes(term) ||
-      contract.contract_type_desc.toLowerCase().includes(term)||
-      contract.Description.toLowerCase().includes(term)||
-      contract.status_desc.toLowerCase().includes(term)||
-      contract.access_identifier.toLowerCase().includes(term)
-      
-    );
-   
-  }  
   populateHeaders() {
-    // this.available = this.contractList.filter(contract => contract.status_desc === 'Disponible').length;
-    // this.nextToExpire = this.contractList.filter(contract => contract.status_desc === 'Proximos a vencer').length;
-    // this.contracted = this.contractList.filter(contract => contract.status_desc === 'Contratado').length;
-    // for(let i = 0; i < this.contractList.length; i++) {
-    //   alert(this.contractList[i].status_desc);
-    // }
+
     
     this.totalContracts = this.contractList.length;
   }
@@ -175,6 +192,7 @@ export class ContractComponent {
     const printWindow = window.open(pdfBlob);
     printWindow?.print();
   }
+  //obtine la lista de contratos desde el backend
   getContracts(): void {
     this.contractService.getContracts_summary().subscribe(
               {next: (data: any) => {
@@ -183,6 +201,7 @@ export class ContractComponent {
                 this.contractList = this.response;
                 this.filteredContracts = this.contractList;
                 this.totalContracts = this.contractList.length;
+                
                 for(let i = 0; i < this.filteredContracts.length; i++) {
                     if (this.contractList[i].status_desc === 'Activo') {
                       this.available = this.available + 1;
@@ -200,6 +219,9 @@ export class ContractComponent {
             });
     
   }
+  //poblamos los nombres de los clientes para el filtro
+ 
+  //Exporta los contratos a un archivo de excel
   exportContracts(): void {
      const worksheet = XLSX.utils.json_to_sheet(this.filteredContracts);
       const workbook = XLSX.utils.book_new();

@@ -1,86 +1,237 @@
 <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 antialiased">
     <div class="mx-auto max-w-screen-2xl px-4 lg:px-12">
         <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
-            <h1 class="title-font text-4xl font-medium p-4 text-yellow-500">Estadisticas Contratos</h1>
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-                
-                <!-- <div class="flex-1 flex items-center space-x-2">
-
-                    <h1 class="title-font text-3xl font-medium p-2 text-yellow-500">Contratos:</h1>
-                    <h1 class="title-font text-3xl font-medium p-2 text-white">{{this.totalContracts}}</h1>
-                    <h1 class="title-font text-3xl font-medium p-2 text-green-500"> Activos: </h1>
-                    <h1 class="title-font text-3xl font-medium p-2 text-white">{{this.available}}</h1>
-                    <h1 class="title-font text-3xl font-medium p-2 text-red-500"> Proximos a vencer:</h1>
-                    <h1 class="title-font text-3xl font-medium p-2 text-white">{{this.nextToExpire}}</h1>
-
-
-                    
-                </div> -->
-                <!-- <div class="flex flex-row md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-1 flex-shrink-0 bg-gray-700 p-4"> -->
-                        <h2 class="text-gray-500 dark:text-gray-400 items-center y-2">
-                            <span class="text-gray-300 ml-2 bg-blue-700 p-4">Total:  {{this.totalContracts}}</span>
-                            <span class="text-gray-300 ml-2 bg-green-700 p-4">Activos: {{this.available}}</span>
-                            <span class="text-gray-300 ml-2 bg-red-700 p-4">Proximos a vencer: {{this.nextToExpire}}</span>
-                        </h2>
-                    <!-- </div> -->
-            </div>
-            <div class="flex flex-col md:flex-row items-stretch md:items-center md:space-x-3 space-y-3 md:space-y-0 justify-between mx-4 py-4 border-t dark:border-gray-700">
-                <div class="w-full md:w-1/2">
-                    <form #searchForm class="flex items-center">
-                        <label for="simple-search" class="sr-only">Search</label>
-                        <div class="relative w-full">
-                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
-                                </svg>
-                            </div>
-                            <input [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" (input)="filterContracts()" type="text" id="simple-search" placeholder="Search for products" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" >
+            <h1 class="title-font text-4xl font-medium p-4 text-white mt-2">Mis contratos</h1>
+            <div class="flex flex-row md:flex-row items-stretch md:items-center md:space-x-3 space-y-3 md:space-y-0 justify-between mx-4 py-4 border-t dark:border-gray-700">
+                <div class="w-1/3 md:w-1/3" >
+                     <span class="inline-row text-white p-2 mb-2">Estatus</span>
+                    <div class="flex items-center">
+                        <div class="relative w-full p-2 rounded-lg">
+                            <select [(ngModel)]="statusCriteria" (ngModelChange)="onSelectionChangeStatus($event)" id="filter" class="inline-block w-1/4 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500">
+                                <option value="">Estatus</option>
+                                <option *ngFor="let option of filterOptions" [value]="option.category">{{option.category}}</option>
+                            </select>
+                            <h3 class="inline-block w-1/2 rounded-lg text-gray-500 dark:text-gray-400 items-center">
+                                <span class="text-white  ml-3">Activos:  {{this.available}}</span>
+                                <span class="text-white  p-2">Prox. Vencer:  {{this.nextToExpire}}</span>
+                            </h3>
                         </div>
-                    </form>
+                    </div>
                 </div>
-                <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                    <button *ngIf="showdashboardButtons" data-tooltip-target="tooltip-add-contract" type="button" id="createProductButton"  class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-primary-800"  (click)="openCreateContractModal()">
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                            <path fill-rule="evenodd" d="M9 7V2.221a2 2 0 0 0-.5.365L4.586 6.5a2 2 0 0 0-.365.5H9Zm2 0V2h7a2 2 0 0 1 2 2v6.41A7.5 7.5 0 1 0 10.5 22H6a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Z" clip-rule="evenodd"/>
-                            <path fill-rule="evenodd" d="M9 16a6 6 0 1 1 12 0 6 6 0 0 1-12 0Zm6-3a1 1 0 0 1 1 1v1h1a1 1 0 1 1 0 2h-1v1a1 1 0 1 1-2 0v-1h-1a1 1 0 1 1 0-2h1v-1a1 1 0 0 1 1-1Z" clip-rule="evenodd"/>
-                        </svg>
-                        <div id="tooltip-add-contract" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                            Crear Contrato
-                            <div class="tooltip-arrow" data-popper-arrow></div>
+                <div class="w-1/3 md:w-1/3">
+                    <span class="inline-row text-white p-2 mb-2">Filtrar</span>
+                    <div class="flex items-center">
+                        <div class="relative w-full  p-2 rounded-lg">
+                            <select [(ngModel)]="accessIndentifier" (ngModelChange)="onSelectionChangeAccessIdentifier($event)" id="filter" 
+                            class="inline-block w-1/3 rounded-lg mr-1 border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500">
+                                <option value="">Acceso</option>
+                                <option *ngFor="let contract of contractList" [value]="contract.access_identifier">{{contract.access_identifier}}</option>
+                            </select>
+                            <select [(ngModel)]="contractType" 
+                            (ngModelChange)="onSelectionChangeProduct($event)" 
+                            id="filter" 
+                            class="inline-block  w-1/3 rounded-lg border border-primary-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500">
+                                <option value="">Producto</option>
+                                <option *ngFor="let contract of contractList" [value]="contract.Description">{{contract.Description}}</option>
+                            </select>
                         </div>
-                    </button>
-                    <button *ngIf="showdashboardButtons"data-tooltip-target="tooltip-export-contracts" (click)="exportContracts()" type="button" id="createProductButton"  class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-primary-800"  (click)="exportContracts()">
-                        <div id="tooltip-export-contracts" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                            Exportar Contratos
-                            <div class="tooltip-arrow" data-popper-arrow></div>
-                        </div>
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                            <path fill-rule="evenodd" d="M9 7V2.221a2 2 0 0 0-.5.365L4.586 6.5a2 2 0 0 0-.365.5H9Zm2 0V2h7a2 2 0 0 1 2 2v9.293l-2-2a1 1 0 0 0-1.414 1.414l.293.293h-6.586a1 1 0 1 0 0 2h6.586l-.293.293A1 1 0 0 0 18 16.707l2-2V20a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Z" clip-rule="evenodd"/>
-                        </svg>
-                        <!-- Exportar Contratos -->
-                    </button>
-                    <button *ngIf ="!showdashboardButtons" (click)="generatePDF()"  data-tooltip-target="export-report" type="button" id="createclientButton" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" >
-                                <div id="export-report" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                                    Exportar Reporte
-                                    <div class="tooltip-arrow" data-popper-arrow></div>
-                                </div>
-                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    </div>    
+                </div>
+                <div class="w-1/3 md:w-1/3">
+                    <span class="inline-row text-white p-2 mb-2">Acciones</span>
+                    <div class="flex justify-center">
+                        <div class="inline-block relative w-full  p-2 rounded-lg ">
+                           <button *ngIf="showdashboardButtons" 
+                           title="Crear Contrato"
+                           type="button" id="createProductButton"  
+                           class="w-1/6 inline-block inline-flex items-center justify-center p-1.5 mr-2 border border-[9F580A]/20 rounded text-green-600 bg-green-600/10 hover:bg-green-600/20 dark:border-green-500/30 dark:bg-green-500/20 dark:hover:bg-green-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors"
+                           (click)="openCreateContractModal()">
+                                <svg class="w-4 h-4 text-white-800 dark:text-green justify-self-center " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd" d="M9 7V2.221a2 2 0 0 0-.5.365L4.586 6.5a2 2 0 0 0-.365.5H9Zm2 0V2h7a2 2 0 0 1 2 2v6.41A7.5 7.5 0 1 0 10.5 22H6a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Z" clip-rule="evenodd"/>
+                                    <path fill-rule="evenodd" d="M9 16a6 6 0 1 1 12 0 6 6 0 0 1-12 0Zm6-3a1 1 0 0 1 1 1v1h1a1 1 0 1 1 0 2h-1v1a1 1 0 1 1-2 0v-1h-1a1 1 0 1 1 0-2h1v-1a1 1 0 0 1 1-1Z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                            <button *ngIf="showdashboardButtons" 
+                            title="Exportar Contratos" 
+                            type="button" id="createProductButton"  
+                            class="w-1/6 inline-block inline-flex items-center justify-center p-1.5 mr-2 border border-[9F580A]/20 rounded text-blue-600 bg-blue-600/10 hover:bg-blue-600/20 dark:border-blue-500/30 dark:bg-blue-500/20 dark:hover:bg-blue-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                              (click)="exportContracts()">     
+                                <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd" d="M9 7V2.221a2 2 0 0 0-.5.365L4.586 6.5a2 2 0 0 0-.365.5H9Zm2 0V2h7a2 2 0 0 1 2 2v9.293l-2-2a1 1 0 0 0-1.414 1.414l.293.293h-6.586a1 1 0 1 0 0 2h6.586l-.293.293A1 1 0 0 0 18 16.707l2-2V20a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Z" clip-rule="evenodd"/>
+                                </svg>
+                                
+                            </button>
+                            <button *ngIf ="showdashboardButtons" 
+                            (click)="generatePDF()"  
+                            data-tooltip-target="export-report" 
+                            type="button" 
+                            title="Descargar Reporte"
+                            id="createclientButton" 
+                            class="w-1/6 inline-block inline-flex items-center justify-center p-1.5 mr-2 border border-[9F580A]/20 rounded text-purple-600 bg-purple-600/10 hover:bg-purple-600/20 dark:border-purple-500/30 dark:bg-purple-500/20 dark:hover:bg-purple-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors">
+                                <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                     <path fill-rule="evenodd" d="M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2 2 2 0 0 0 2 2h12a2 2 0 0 0 2-2 2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2V4a2 2 0 0 0-2-2h-7Zm-6 9a1 1 0 0 0-1 1v5a1 1 0 1 0 2 0v-1h.5a2.5 2.5 0 0 0 0-5H5Zm1.5 3H6v-1h.5a.5.5 0 0 1 0 1Zm4.5-3a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h1.376A2.626 2.626 0 0 0 15 15.375v-1.75A2.626 2.626 0 0 0 12.375 11H11Zm1 5v-3h.375a.626.626 0 0 1 .625.626v1.748a.625.625 0 0 1-.626.626H12Zm5-5a1 1 0 0 0-1 1v5a1 1 0 1 0 2 0v-1h1a1 1 0 1 0 0-2h-1v-1h1a1 1 0 1 0 0-2h-2Z" clip-rule="evenodd"/>
                                 </svg>
-                    </button>
-                    <button *ngIf ="!showdashboardButtons" (click)="generateAndPrintPDF()" data-tooltip-target="print-report" type="button" id="createclientButton" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" >
-                                    <div id="print-report" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                                        Imprimir Reporte
-                                        <div class="tooltip-arrow" data-popper-arrow></div>
-                                    </div>
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                
+                            </button>
+                            <button 
+                            *ngIf ="showdashboardButtons" 
+                            (click)="generateAndPrintPDF()" 
+                            data-tooltip-target="print-report" 
+                            type="button" 
+                            title="Imprimir Reporte"
+                            id="printReportButton"
+                            class="w-1/6 inline-block inline-flex items-center justify-center p-1.5 mr-2 border border-[9F580A]/20 rounded text-amber-600 bg-amber-600/10 hover:bg-amber-600/20 dark:border-amber-500/30 dark:bg-amber-500/20 dark:hover:bg-amber-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors">
+                                    <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                         <path fill-rule="evenodd" d="M8 3a2 2 0 0 0-2 2v3h12V5a2 2 0 0 0-2-2H8Zm-3 7a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h1v-4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v4h1a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2H5Zm4 11a1 1 0 0 1-1-1v-4h8v4a1 1 0 0 1-1 1H9Z" clip-rule="evenodd"/>
                                     </svg>
-                    </button>
+                            </button>
+                </div> 
+                            
+                        </div>
+                    
                 </div>
+                
             </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-xs text-left text-gray-500 dark:text-gray-400">
+            <div class="mt-4 flow-root sm:mt-8 border-t border-gray-200 dark:border-gray-700" id="contractsSection" *ngIf="contractList.length !=0" >
+                <div class="divide-y divide-gray-200 dark:divide-gray-700 p-2">
+                    <div class="flex flex-wrap items-center gap-y-4 py-6 p-2 justify-center" *ngFor="let contract of this.filteredContracts; let i = index" [ngClass]="{'bg-gray-50 dark:bg-gray-800': i % 2 === 0, 'bg-white dark:bg-gray-900': i % 2 !== 0}">
+                        <dl class="w-1/4 sm:w-1/4 lg:w-auto lg:flex-1">
+                            <dt class="text-sm font-medium text-white-500 dark:text-gray-400 justify-text-center ml-4">ID:
+                                <span class="justify-text-start text-xs text-white ">{{contract.id}}</span>
+                            </dt>
+                            <dt class="text-sm font-medium text-white-500 dark:text-gray-400 justify-text-center ml-4">Producto:
+                                <br><span class="justify-text-start text-xs text-white ">{{contract.Description}}</span>
+                            </dt>
+                            <dt class="text-sm font-medium text-white-500 dark:text-gray-400 justify-text-center ml-4">Tipo:
+                                <br><span class="justify-text-start text-xs text-white ">{{contract.contract_type_desc}}</span>
+                            </dt>
+                        </dl>
+                        <dl class="w-1/4 sm:w-1/4 lg:w-auto lg:flex-1">
+                            <dt class="text-sm font-medium text-white-500 dark:text-gray-400 justify-text-center ml-4">Cliente:
+                                <br><span class="justify-text-start text-xs text-white ">{{contract.name}} {{contract.father_lastname}} {{contract.mother_lastname}}</span>
+                                <div class="flex items-center gap-1">
+                                    <svg class="w-4 h-4 text-[#25D366]" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.967 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                    </svg>
+                                    <span class="justify-text-start text-xs text-white "> {{contract.telephone1}}</span>
+                                </div>                                 
+                            </dt>
+                        </dl>
+                        <dl class="w-1/4 sm:w-1/4 lg:w-auto lg:flex-1">
+                            <dt class="text-sm font-medium text-white-500 dark:text-gray-400 justify-text-center ml-4">Acceso:
+                                <br><span class="justify-text-start text-xs text-white "><span class="text-gray-500">Email:</span> {{contract.access_identifier}}</span>
+                                <br><span class="justify-text-start text-xs text-white "><span class="text-gray-500">Contraseña:</span> {{contract.access_password}}</span>
+                            </dt>
+                        </dl>
+                        <dl class="w-1/4 sm:w-1/4 lg:w-auto lg:flex-1">
+                            <dt class="text-sm font-medium text-white-500 dark:text-gray-400 justify-text-center ml-4">Fechas:
+                                <br><span class="justify-text-start text-xs text-white "><span class="text-gray-500">Inicio:</span> {{contract.start_date | date: 'shortDate'}}</span>
+                                <br><span class="justify-text-start text-xs text-white "><span class="text-gray-500">Fin:</span> {{contract.end_date | date: 'shortDate'}}</span>
+                            </dt>
+                        </dl>
+                        <dl class="w-1/4 sm:w-1/4 lg:w-auto lg:flex-1">
+                            <dt class="text-sm font-medium text-white-500 dark:text-gray-400 justify-text-center ml-4 rounded-lg">Estatus:
+                                <br><span class="justify-text-start text-xs text-white rounded-lg " [ngClass]="{'bg-green-600': contract.status_desc === 'Activo','bg-red-600': contract.status_desc === 'Inactivo' || contract.status_desc === 'Proximo a vencer'}">{{contract.status_desc}}</span>
+                                <br><span class="justify-text-start text-xs text-white">
+                                    <span class="text-gray-500 rounded-lg" [ngClass]="{'text-green-600': contract.days_left > 6,'text-red-600': contract.days_left <= 5}">{{contract.days_left}}</span> dias Restantes</span>
+                            </dt>
+                        </dl>
+                        <dl class="w-1/4 sm:w-1/4 lg:w-auto lg:flex-1">
+                            <dt class="text-sm font-medium text-white-500 dark:text-gray-400 justify-text-center ml-4 rounded-lg">Precio:
+                                <br><span class="justify-text-start text-xs text-white rounded-lg ">$ {{contract.total_price}}</span>
+                            </dt>
+                        </dl>
+                        <dl class="w-1/4 sm:w-1/4 lg:w-auto lg:flex-1">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 justify-start mt-1 ml-2">Detalle</dt>
+                            <dd class="mt-1.5 text-sm text-gray-900 dark:text-white justify-center">
+                                <div class="w-full grid sm:grid-cols-2 lg:flex lg:w-64 lg:items-center lg:justify-start gap-2">
+                                    <button 
+                                    title="Detalle del Contrato"
+                                    data-tooltip-target="share-contract" 
+                                    type="button" 
+                                    (click)="shareContract(contract.name,contract.telephone1,contract.access_identifier,contract.access_password,contract.start_date,contract.end_date,contract.Description)"  
+                                    class="inline-flex items-center justify-center p-1.5 border border-blue-600/20 rounded text-blue-600 bg-blue-600/10 hover:bg-blue-600/20 dark:border-blue-500/30 dark:bg-blue-500/20 dark:hover:bg-blue-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-theme-primary transition-colors"
+                                    (click)="renovateContract(contract.id)">
+                                        <div id="share-contract" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
+                                            Compartir Contrato
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                        </svg>
+                                    </button>
+                                    <button  
+                                    title="Descripcion del Contrato" 
+                                    type="button"
+                                    class="inline-flex items-center justify-center p-1.5 border border-blue-600/20 rounded text-blue-600 bg-blue-600/10 hover:bg-blue-600/20 dark:border-blue-500/30 dark:bg-blue-500/20 dark:hover:bg-blue-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-theme-primary transition-colors" 
+                                    (click)="renovateContract(contract.id)">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl class="w-1/4 sm:w-1/4 lg:w-auto lg:flex-1">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 justify-text-start mt-1 ml-10">Acciones</dt>
+                            <dd class="mt-1.5 text-sm text-gray-900 dark:text-white justify-center">
+                                <div class="w-full grid sm:grid-cols-2 lg:flex lg:w-64 lg:items-center lg:justify-start gap-2">
+                                    <button 
+                                    data-tooltip-target="share-contract" 
+                                    type="button"
+                                    title="Compartir Contrato" 
+                                    (click)="shareContract(contract.name,contract.telephone1,contract.access_identifier,contract.access_password,contract.start_date,contract.end_date,contract.Description)" 
+                                    class="inline-flex items-center justify-center p-1.5 border border-[#25D366]/20 rounded text-[#25D366] bg-[#25D366]/10 hover:bg-[#25D366]/20 dark:border-[#25D366]/30 dark:bg-[#25D366]/20 dark:hover:bg-[#25D366]/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#25D366] transition-colors" 
+                                    (click)="renovateContract(contract.id)">
+                                        <svg class="w-4 h-4 text-[#25D366]" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.967 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                        </svg>
+                                    </button>
+                                    <button  
+                                    title="Renovar Contrato"    
+                                    type="button" 
+                                    class="inline-flex items-center justify-center p-1.5 border border-[#00B74A]/20 rounded text-[#00B74A] bg-[#00B74A]/10 hover:bg-[#00B74A]/20 dark:border-[#00B74A]/30 dark:bg-[#00B74A]/20 dark:hover:bg-[#00B74A]/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#00B74A] transition-colors" 
+                                    (click)="renovateContract(contract.id)">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                        </svg>
+                                    </button>
+                                    <button  
+                                    data-tooltip-target="reminder-contract" 
+                                    type="button" 
+                                    title="Enviar Recordatorio"
+                                    (click)="sendReminder(contract.telephone1, contract.name, contract.days_left,contract.Description)" 
+                                    class="inline-flex items-center justify-center p-1.5 border border-[#00B74A]/20 rounded text-[#00B74A] bg-[#00B74A]/10 hover:bg-[#00B74A]/20 dark:border-[#00B74A]/30 dark:bg-[#00B74A]/20 dark:hover:bg-[#00B74A]/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#00B74A] transition-colors">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-.59-13h1.18v4.88l3.27 3.27-.84.84-3.61-3.61V7z"/>
+                                        </svg>
+                                    </button>
+                                    <button  id="delete-contract" 
+                                    data-tooltip-target="delete-contract"
+                                    title="Eliminar Contrato" 
+                                    type="button"  
+                                        class="inline-flex items-center justify-center p-1.5 border border-[#E02424]/20 rounded text-[#E02424] bg-[#E02424]/10 hover:bg-[#E02424]/20 dark:border-[#E02424]/30 dark:bg-[#E02424]/20 dark:hover:bg-[#E02424]/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#00B74A] transition-colors" 
+                                        (click)="deleteContract(contract.id)">
+                                        <svg class="w-4 h-4 text-gray-800 dark:text-white  rounded-full" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                          <path fill-rule="evenodd" d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </button>
+                                    <button  id="create-garanty" 
+                                    
+                                    title="Crear Garantía" 
+                                    type="button"  
+                                        class="inline-flex items-center justify-center p-1.5 border border-amber-600/20 rounded text-amber-600 bg-amber-600/10 hover:bg-amber-600/20 dark:border-amber-500/30 dark:bg-amber-500/20 dark:hover:bg-amber-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors" 
+                                        (click)="deleteContract(contract.id)">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>   
+                </div>
+                <!-- <table class="w-full text-xs text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-white text-center">
                         <tr>
                             <th scope="col" class="p-2 text-center">ID</th>
@@ -101,11 +252,6 @@
                     </thead>
                     <tbody>
                         <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-900 text-center" *ngFor="let contract of filteredContracts">
-                            <!-- <th scope="row" class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <div class="flex items-center mr-3 p-4">
-                                    {{contract.id}}
-                                </div>
-                            </th> -->
                             <td class="py-2 text-xs  text-gray-900 whitespace-nowrap dark:text-white text-center">{{contract.id}}</td>
                             <td class="py-2 text-xs  text-gray-900 whitespace-nowrap dark:text-white text-center">{{contract.name}} </td>
                             <td class="py-2 text-xs  text-gray-900 whitespace-nowrap dark:text-white text-center">{{contract.father_lastname}}</td>
@@ -121,7 +267,7 @@
                             <td class="py-2 text-xs  text-gray-900 whitespace-nowrap dark:text-white">{{contract.contract_type_desc}}</td>
                             <td class="py-2 text-xs  text-gray-900 whitespace-nowrap dark:text-white">
                                 <div class="flex items-center space-x-1" *ngIf="showdashboardButtons">
-                                    <button data-tooltip-target="share-contract" type="button" (click)="shareContract(contract.name,contract.telephone1,contract.access_identifier,contract.access_password,contract.start_date,contract.end_date,contract.Description)" data-drawer-show="drawer-update-product" aria-controls="drawer-update-product" class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" (click)="renovateContract(contract.id)">
+                                    <button data-tooltip-target="share-contract" type="button" (click)="shareContract(contract.name,contract.telephone1,contract.access_identifier,contract.access_password,contract.start_date,contract.end_date,contract.Description)" class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" (click)="renovateContract(contract.id)">
                                         <div id="share-contract" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
                                             Compartir Contrato
                                             <div class="tooltip-arrow" data-popper-arrow></div>
@@ -130,7 +276,7 @@
                                             <path d="M5.027 10.9a8.729 8.729 0 0 1 6.422-3.62v-1.2A2.061 2.061 0 0 1 12.61 4.2a1.986 1.986 0 0 1 2.104.23l5.491 4.308a2.11 2.11 0 0 1 .588 2.566 2.109 2.109 0 0 1-.588.734l-5.489 4.308a1.983 1.983 0 0 1-2.104.228 2.065 2.065 0 0 1-1.16-1.876v-.942c-5.33 1.284-6.212 5.251-6.25 5.441a1 1 0 0 1-.923.806h-.06a1.003 1.003 0 0 1-.955-.7A10.221 10.221 0 0 1 5.027 10.9Z"/>
                                         </svg>
                                     </button>
-                                    <button  data-tooltip-target="refresh-contract" type="button" data-drawer-show="drawer-update-product" aria-controls="drawer-update-product" class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" (click)="renovateContract(contract.id)">
+                                    <button  data-tooltip-target="refresh-contract" type="button" class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" (click)="renovateContract(contract.id)">
                                         <div id="refresh-contract" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
                                             Renovar Contrato
                                             <div class="tooltip-arrow" data-popper-arrow></div>
@@ -139,7 +285,7 @@
                                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4"/>
                                        </svg>
                                     </button>
-                                    <button  data-tooltip-target="reminder-contract" type="button" data-drawer-show="drawer-update-product" aria-controls="drawer-update-product" (click)="sendReminder(contract.telephone1, contract.name, contract.days_left,contract.Description)" type="button" aria-controls="drawer-read-product-advanced" class="py-2 px-3 flex items-center text-sm font-medium text-center text-gray-900 focus:outline-none bg-white rounded-lg  hover:bg-red-500 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 hover:bg-red-800">
+                                    <button  data-tooltip-target="reminder-contract" type="button" (click)="sendReminder(contract.telephone1, contract.name, contract.days_left,contract.Description)" type="button" aria-controls="drawer-read-product-advanced" class="py-2 px-3 flex items-center text-sm font-medium text-center text-gray-900 focus:outline-none bg-white rounded-lg  hover:bg-red-500 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 hover:bg-red-800">
                                         <div id="reminder-contract" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
                                             Enviar Recordatorio
                                             <div class="tooltip-arrow" data-popper-arrow></div>
@@ -158,29 +304,20 @@
                                             <div class="tooltip-arrow" data-popper-arrow></div>
                                         </div>
                                     </button>
-                                    <!-- <button *ngIf="!showdashboardButtons" (click)="generatePDF()" data-tooltip-target="export-report" type="button" id="createclientButton" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" >
-                                        <div id="export-report" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                                            Exportar Reporte
-                                            <div class="tooltip-arrow" data-popper-arrow></div>
-                                        </div>
-                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                            <path fill-rule="evenodd" d="M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2 2 2 0 0 0 2 2h12a2 2 0 0 0 2-2 2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2V4a2 2 0 0 0-2-2h-7Zm-6 9a1 1 0 0 0-1 1v5a1 1 0 1 0 2 0v-1h.5a2.5 2.5 0 0 0 0-5H5Zm1.5 3H6v-1h.5a.5.5 0 0 1 0 1Zm4.5-3a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h1.376A2.626 2.626 0 0 0 15 15.375v-1.75A2.626 2.626 0 0 0 12.375 11H11Zm1 5v-3h.375a.626.626 0 0 1 .625.626v1.748a.625.625 0 0 1-.626.626H12Zm5-5a1 1 0 0 0-1 1v5a1 1 0 1 0 2 0v-1h1a1 1 0 1 0 0-2h-1v-1h1a1 1 0 1 0 0-2h-2Z" clip-rule="evenodd"/>
-                                        </svg>
-                                    </button>
-                                    <button *ngIf="!showdashboardButtons" (click)="generateAndPrintPDF()" data-tooltip-target="print-report" type="button" id="createclientButton" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" >
-                                        <div id="print-report" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                                            Imprimir Reporte
-                                            <div class="tooltip-arrow" data-popper-arrow></div>
-                                        </div>
-                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                            <path fill-rule="evenodd" d="M8 3a2 2 0 0 0-2 2v3h12V5a2 2 0 0 0-2-2H8Zm-3 7a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h1v-4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v4h1a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2H5Zm4 11a1 1 0 0 1-1-1v-4h8v4a1 1 0 0 1-1 1H9Z" clip-rule="evenodd"/>
-                                        </svg>
-                                    </button> -->
                                 </div>
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </table> -->
+            </div>
+            <div class="mt-4 flow-root sm:mt-8 border-t border-gray-200 dark:border-gray-700" id="contractsSection">
+                <div class="divide-y divide-gray-200 dark:divide-gray-700 p-2">
+                    <div class="flex flex-wrap items-center gap-y-4 py-6 p-2 justify-center">
+                        <span *ngIf="contractList.length == 0" class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                            No se encontraron contratos.
+                        </span>
+                    </div>
+                </div>   
             </div>
             <nav class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4" aria-label="Table navigation">
                 <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
