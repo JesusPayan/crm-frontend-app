@@ -8,6 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:crm-frontend-app": "node dist/crm-frontend-app/server/server.mjs"
+    
   },
   "private": true,
   "dependencies": {
