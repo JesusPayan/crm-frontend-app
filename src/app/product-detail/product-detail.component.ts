@@ -6,8 +6,9 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormsModule,NgForm,NgM
 import { Product } from '../models/product';
 import { ProductService } from '../services/product.service';
 import { response } from 'express';
-
 import { ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { inject } from '@angular/core';
 @Component({
   selector: 'app-product-detail',
   standalone: true,
@@ -17,6 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrl: './product-detail.component.css'
 })
 export class ProductDetailComponent {
+  private router = inject(Router)
   response: any;
   editMode = false;
   product: Product = {
@@ -116,6 +118,7 @@ loggedUser = 'admin';
         console.log('Producto guardado exitosamente:', res);
         alert(res.message);
         this.selectedFile = null;
+        this.router.navigate(['/product-component'], { queryParams: { showButtons: true } });
         this.dialog.closeAll();
       },
       error: (err) => console.error('Error al guardar producto:', err)
@@ -150,6 +153,7 @@ loggedUser = 'admin';
         console.log('Producto actualizado exitosamente:', res);
         alert(res.message);
         this.selectedFile = null;
+        this.router.navigate(['/product-component'], { queryParams: { showButtons: true } });
         this.dialog.closeAll();
       },
       error: (err) => console.error('Error al actualizar producto:', err)

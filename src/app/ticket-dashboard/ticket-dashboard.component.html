@@ -19,7 +19,7 @@
           <div>
             <label for="filter" class="sr-only mb-2 block text-sm font-medium text-gray-900 dark:text-white">Select duration</label>
             <select [(ngModel)]="filterCriteria" (ngModelChange)="onSelectionChange($event)" id="filter" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500">
-              <option value="">--- Selecciona un elemento ---</option>
+              <option value="">Selecciona un elemento</option>
               <option *ngFor="let option of filterOptions" [value]="option.category">{{option.category}}</option>
             </select>
           </div>
@@ -30,26 +30,28 @@
         <div class="divide-y divide-gray-200 dark:divide-gray-700 p-2">
           <div class="flex flex-wrap items-center gap-y-4 py-6 p-2 justify-center" *ngFor="let ticket of this.filterTicketList; let i = index" [ngClass]="{'bg-gray-50 dark:bg-gray-800': i % 2 === 0, 'bg-white dark:bg-gray-900': i % 2 !== 0}">
             <dl class="w-1/4 sm:w-1/4 lg:w-auto lg:flex-1">
-              <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 justify-text-center ml-4">Titulo:</dt>
+              <!-- <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 justify-text-center ml-4">Titulo:</dt> -->
               <dd class="mt-1.5 text-sm text-gray-900 dark:text-white text-center">
-                <span class="justify-text-center ">{{ticket.title}}</span>
+                <span class="text-xs text-gray-300"><span class="text-xs text-gray-500">Titulo:</span> {{ticket.title}}</span>
               </dd>
             </dl>
             <!-- Fecha Creacion -->
             <dl class="w-1/6 sm:w-1/4 lg:w-auto lg:flex-1">
-              <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 justify-text-center ml-4">Fecha Creacion:</dt>
+              <!-- <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 justify-text-center ml-4">Fecha Creacion:</dt> -->
               <dd class="mt-1.5 text-base text-gray-900 dark:text-white justify-text-center">
-                <span class="justify-text-center ml-5">{{ticket.created_at | date: 'shortDate'}}</span>
+                <span class="text-xs text-gray-300"><span class="text-xs text-gray-500">Fecha Creacion:</span> {{ticket.created_at | date: 'shortDate'}}</span>
+                <br><span class="text-xs text-gray-300"><span class="text-xs text-gray-500">Ultima Actualizacion:</span> {{ticket.created_at | date: 'shortDate'}}</span>
               </dd>
             </dl>
             <!-- Fecha Estatus -->
             <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-              <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 justify-text-center ml-5">Ultima Act.:</dt>
+              
               <dd class="mt-1.5 text-sm  text-gray-900 dark:text-white justify-text-center">
-                <span class="justify-text-center ml-5">{{ticket.created_at | date: 'shortDate'}}</span>
+                <span class="text-xs text-gray-300"><span class="text-xs text-gray-500">Prioridad:</span> {{ticket.priority}}</span>
+                <br><span class="text-xs text-gray-300"><span class="text-xs text-gray-500">Asignado:</span> {{ticket.assignedTo}}</span>
               </dd>
             </dl>
-            <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
+            <!-- <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
               <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 justify-text-center ml-4">Prioridad:</dt>
               <dd class="mt-1.5 text-sm  text-gray-900 dark:text-white justify-text-center">
                 <span class="text-center ml-5">{{ticket.priority}}</span>
@@ -60,7 +62,7 @@
               <dd class="mt-1.5 text-sm text-gray-900 dark:text-white justify-text-center">
                 <span class="text-center ml-5">{{ticket.assignedTo}}</span>
               </dd>
-            </dl>
+            </dl> -->
             <!-- <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
               <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 justify-text-center ml-4">Prioridad:</dt>
               <dd class="mt-1.5 text-sm  text-gray-900 dark:text-white justify-text-center">
@@ -68,30 +70,33 @@
               </dd>
             </dl> -->
             <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-              <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 justify-text-center ml-4">Status:</dt>
+              
               <dd [hidden]="ticket.status != 'Open'"  class="me-2 mt-1.5 inline-flex items-center rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">
-                <svg class="me-1 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" viewBox="0 0 30 30">
+                <span class="text-xs text-gray-300"><span class="text-xs text-gray-500">Estatus:</span> {{ticket.status}}</span>
+                <svg class="me-1 h-6 w-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" viewBox="0 0 30 30">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.5 4h-13m13 16h-13M8 20v-3.333a2 2 0 0 1 .4-1.2L10 12.6a1 1 0 0 0 0-1.2L8.4 8.533a2 2 0 0 1-.4-1.2V4h8v3.333a2 2 0 0 1-.4 1.2L13.957 11.4a1 1 0 0 0 0 1.2l1.643 2.867a2 2 0 0 1 .4 1.2V20H8Z" />
                 </svg>
-                <span class="justify-text-center">{{ticket.status}}</span>
+                
+                
               </dd>
               <dd [hidden]="ticket.status != 'In Progress'" class="me-2 mt-1.5 inline-flex items-center rounded bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
-                <svg class="me-1 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <span class="text-xs text-gray-300"><span class="text-xs text-gray-500">Estatus:</span> {{ticket.status}}</span>
+                <svg class="me-1 h-6 w-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z" />
                 </svg>
-                <span class="justify-text-center">{{ticket.status}}</span>
+                
               </dd>
               <dd [hidden]="ticket.status != 'Resolved'" class="me-2 mt-1.5 inline-flex items-center rounded bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300">
-                <svg class="me-1 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <span class="text-xs text-gray-300"><span class="text-xs text-gray-500">Estatus:</span> {{ticket.status}}</span>
+                <svg class="me-1 h-6 w-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5" />
                 </svg>
-                <span class="justify-text-center">{{ticket.status}}</span>
               </dd>
               <dd [hidden]="ticket.status != 'Closed'" class="me-2 mt-1.5 inline-flex items-center rounded bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800 dark:bg-red-900 dark:text-red-300">
-                <svg class="me-1 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <span class="text-xs text-gray-300"><span class="text-xs text-gray-500">Estatus:</span> {{ticket.status}}</span>
+                <svg class="me-1 h-6 w-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
                 </svg>
-                <span class="justify-text-center">{{ticket.status}}</span>
               </dd>
             </dl>
             <!-- Acciones -->
@@ -100,43 +105,26 @@
               <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 justify-text-center mt-1 ml-20">Acciones</dt>
               <dd class="mt-1.5 text-sm text-gray-900 dark:text-white justify-text-center">
                 <div class="w-full grid sm:grid-cols-2 lg:flex lg:w-64 lg:items-center lg:justify-end gap-2">
-                <button class="w-full inline-flex justify-center rounded-lg  border border-green-200 bg-green px-3 py-2 text-sm font-medium text-green-900 hover:bg-green-100 hover:text-green-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-green-800 dark:text-gray-400 dark:hover:bg-green-700 dark:hover:text-white dark:focus:ring-gray-700 lg:w-auto">
+                <button class="inline-block inline-flex items-center justify-center p-1.5 border border-[9F580A]/20 rounded text-green-600 bg-green-600/10 hover:bg-green-600/20 dark:border-green-500/30 dark:bg-green-500/20 dark:hover:bg-green-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors">
                     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path fill="currentColor" fill-rule="evenodd" d="M12 4a8 8 0 0 0-6.895 12.06l.569.718-.697 2.359 2.32-.648.379.243A8 8 0 1 0 12 4ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.96 9.96 0 0 1-5.016-1.347l-4.948 1.382 1.426-4.829-.006-.007-.033-.055A9.958 9.958 0 0 1 2 12Z" clip-rule="evenodd"/>
                         <path fill="currentColor" d="M16.735 13.492c-.038-.018-1.497-.736-1.756-.83a1.008 1.008 0 0 0-.34-.075c-.196 0-.362.098-.49.291-.146.217-.587.732-.723.886-.018.02-.042.045-.057.045-.013 0-.239-.093-.307-.123-1.564-.68-2.751-2.313-2.914-2.589-.023-.04-.024-.057-.024-.057.005-.021.058-.074.085-.101.08-.079.166-.182.249-.283l.117-.14c.121-.14.175-.25.237-.375l.033-.066a.68.68 0 0 0-.02-.64c-.034-.069-.65-1.555-.715-1.711-.158-.377-.366-.552-.655-.552-.027 0 0 0-.112.005-.137.005-.883.104-1.213.311-.35.22-.94.924-.94 2.16 0 1.112.705 2.162 1.008 2.561l.041.06c1.161 1.695 2.608 2.951 4.074 3.537 1.412.564 2.081.63 2.461.63.16 0 .288-.013.4-.024l.072-.007c.488-.043 1.56-.599 1.804-1.276.192-.534.243-1.117.115-1.329-.088-.144-.239-.216-.43-.308Z"/>
                     </svg>
                   </button>
-                <button type="button" class="w-full inline-flex justify-center rounded-lg  border border-green-200 bg-red px-3 py-2 text-sm font-medium text-red-900 hover:bg-red-100 hover:text-red-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-red-800 dark:text-gray-400 dark:hover:bg-red-700 dark:hover:text-white dark:focus:ring-gray-700 lg:w-auto">
+                <button type="button" class="inline-block inline-flex items-center justify-center p-1.5 border border-[9F580A]/20 rounded text-red-600 bg-red-600/10 hover:bg-red-600/20 dark:border-red-500/30 dark:bg-red-500/20 dark:hover:bg-red-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors">
                     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m6 6 12 12m3-6a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
                 </button>
-                <a href="#" class="w-full inline-flex justify-center rounded-lg  border border-blue-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-blue-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-blue-600 dark:bg-blue-800 dark:text-gray-400 dark:hover:bg-blue-700 dark:hover:text-white dark:focus:ring-gray-700 lg:w-auto"><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <button  class="inline-block inline-flex items-center justify-center p-1.5 border border-[9F580A]/20 rounded text-blue-600 bg-blue-600/10 hover:bg-blue-600/20 dark:border-blue-500/30 dark:bg-blue-500/20 dark:hover:bg-blue-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                  <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"/>
                     <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                    </svg>
-                </a>
+                  </svg>
+                </button>
             </div>
               </dd>
             </dl>
-            <!-- <div class="w-full grid sm:grid-cols-2 lg:flex lg:w-64 lg:items-center lg:justify-end gap-4">
-                <button class="w-full inline-flex justify-center rounded-lg  border border-green-200 bg-green px-3 py-2 text-sm font-medium text-green-900 hover:bg-green-100 hover:text-green-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-green-800 dark:text-gray-400 dark:hover:bg-green-700 dark:hover:text-white dark:focus:ring-gray-700 lg:w-auto">
-                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path fill="currentColor" fill-rule="evenodd" d="M12 4a8 8 0 0 0-6.895 12.06l.569.718-.697 2.359 2.32-.648.379.243A8 8 0 1 0 12 4ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.96 9.96 0 0 1-5.016-1.347l-4.948 1.382 1.426-4.829-.006-.007-.033-.055A9.958 9.958 0 0 1 2 12Z" clip-rule="evenodd"/>
-                        <path fill="currentColor" d="M16.735 13.492c-.038-.018-1.497-.736-1.756-.83a1.008 1.008 0 0 0-.34-.075c-.196 0-.362.098-.49.291-.146.217-.587.732-.723.886-.018.02-.042.045-.057.045-.013 0-.239-.093-.307-.123-1.564-.68-2.751-2.313-2.914-2.589-.023-.04-.024-.057-.024-.057.005-.021.058-.074.085-.101.08-.079.166-.182.249-.283l.117-.14c.121-.14.175-.25.237-.375l.033-.066a.68.68 0 0 0-.02-.64c-.034-.069-.65-1.555-.715-1.711-.158-.377-.366-.552-.655-.552-.027 0 0 0-.112.005-.137.005-.883.104-1.213.311-.35.22-.94.924-.94 2.16 0 1.112.705 2.162 1.008 2.561l.041.06c1.161 1.695 2.608 2.951 4.074 3.537 1.412.564 2.081.63 2.461.63.16 0 .288-.013.4-.024l.072-.007c.488-.043 1.56-.599 1.804-1.276.192-.534.243-1.117.115-1.329-.088-.144-.239-.216-.43-.308Z"/>
-                    </svg>
-                  </button>
-                <button type="button" class="w-full inline-flex justify-center rounded-lg  border border-green-200 bg-red px-3 py-2 text-sm font-medium text-red-900 hover:bg-red-100 hover:text-red-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-red-800 dark:text-gray-400 dark:hover:bg-red-700 dark:hover:text-white dark:focus:ring-gray-700 lg:w-auto">
-                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m6 6 12 12m3-6a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                    </svg>
-                </button>
-                <a href="#" class="w-full inline-flex justify-center rounded-lg  border border-blue-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-blue-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-blue-600 dark:bg-blue-800 dark:text-gray-400 dark:hover:bg-blue-700 dark:hover:text-white dark:focus:ring-gray-700 lg:w-auto"><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"/>
-                    <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                    </svg>
-                </a>
-            </div> -->
           </div>
         </div>
       </div>

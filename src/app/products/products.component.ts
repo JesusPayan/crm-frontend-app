@@ -29,7 +29,11 @@ import { ActivatedRoute } from '@angular/router';
 export class ProductsComponent {
   searchControl = new FormControl('');
   constructor(public dialog: MatDialog, private router: Router, private productService: ProductService,private route: ActivatedRoute) {
-    // this.productService.getProducts().subscribe(console.log);
+    // this.productService.getProducts().subscribe(console.log);+
+    if(this.showdashboardButtons===true){
+      this.loadProducts();
+    }
+
   }
   filteredProducts:Product[] = [];
   productList:Product[] = [];
@@ -42,7 +46,23 @@ export class ProductsComponent {
   response: any;
   searchText: string = '';
  showdashboardButtons = false;
+ productCreated = false;
   //Poblamos los encabezados de la app
+  loadProducts(){
+    this.productService.getProducts().subscribe(
+            {next: (data: any) => {
+              // console.log(data);
+              this.response = data;
+              this.productList = this.response.data;
+              this.filteredProducts = this.productList;
+              this.total_products = this.productList.length;
+              this.populateHeaders();    
+            },
+            error: (error: any) =>{
+              console.error(error);
+            }
+          });
+  }
   populateHeaders() {
     
     for (let i = 0; i < this.productList.length; i++) {
@@ -76,7 +96,7 @@ export class ProductsComponent {
   
   ngOnInit(): void {
 
-    this.productService.getProducts().subscribe(
+   this.productService.getProducts().subscribe(
             {next: (data: any) => {
               // console.log(data);
               this.response = data;
@@ -91,33 +111,28 @@ export class ProductsComponent {
             }
           });
 
+  
       this.route.queryParams.subscribe(params => {
       this.showdashboardButtons = params['showButtons'] === 'true';
     });
   }  
+ 
 
-   headerList: Header[] = [
-    {title: this.available, description: 'Disponibles',image: 'https://dummyimage.com/600x400/000/fff', bgColor: 'bg-green-500', textColor: 'text-green-500'},
-    {title: this.nextToExpire, description: 'Proximos a vencer',image: 'https://dummyimage.com/600x400/000/fff', bgColor: 'bg-red-500', textColor: 'text-red-900'},
-    {title: this.contracted, description: 'Contratados',image: 'https://dummyimage.com/600x400/000/fff', bgColor: 'bg-blue-500', textColor: 'text-blue-500'},
-    {title: this.total_products, description: 'Total productos',image: 'https://dummyimage.com/600x400/000/fff', bgColor: 'bg-orange-500',  textColor: 'text-stone-900'},
-  ];
   openCreateProductModal() {
     const dialogRef = this.dialog.open(ProductDetailComponent);
   }
   deleteProduct(id: number) {
-    alert('Borrando producto.....'+ id);
     this.productService.deleteProduct(id).subscribe(
       {next: (data: any) => {
               console.log(data);
               this.response = data;
               alert(this.response.message);
+              this.loadProducts();
             },
             error: (error: any) =>{
               console.error(error);
             }
           });
-          this.ngOnInit();
   }
   exportProducts() {
     const worksheet = XLSX.utils.json_to_sheet(this.productList);

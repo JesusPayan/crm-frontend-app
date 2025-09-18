@@ -1,79 +1,91 @@
 <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 antialiased">
     <div class="mx-auto max-w-screen-2xl px-4 lg:px-12">
         <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
-            <h1 class="title-font text-4xl font-medium p-4 text-yellow-500">Estadisticas Clientes</h1>
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-                <!-- Encabezados que mostraran las estadisticas de los clientes -->
-                <!-- <div class="flex-1 row items-center space-x-2">
-                    <h1>
-                        <span class="text-gray-100 dark:text-gray-400">Estadisticas de Clientes </span>
-                    </h1>
-                    <div class="flex flex-row md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-1 flex-shrink-0 bg-gray-700 p-4"> -->
-                        <h2 class="text-gray-500 dark:text-gray-400 items-center y-2">
-                            <span class="text-gray-300 ml-2 bg-blue-700 p-4">Total:  {{totalClients}}</span>
-                            <span class="text-gray-300 ml-2 bg-green-700 p-4">Activos: {{activedClients}}</span>
-                            <span class="text-gray-300 ml-2 bg-red-700 p-4">Inactivos: {{inactivedClients}}</span>
-                        </h2>
-                    <!-- </div> -->
-                </div>
-            </div>
+            <h1 class="title-font text-4xl font-medium p-4 text-white mt-2">Mis Clientes</h1>
             <div class="flex flex-col md:flex-row items-stretch md:items-center md:space-x-3 space-y-3 md:space-y-0 justify-between mx-4 py-4 border-t dark:border-gray-700">
-                <div class="w-full md:w-1/2">
-                    <form #searchForm class="flex items-center">
+                <div class="w-1/2 md:w-1/3">
+                    <span class="inline-row text-white p-2 mb-">Filtrar</span>
+                    <form #searchForm class="inline-block w-full ">
                         <label for="simple-search" class="sr-only">Search</label>
-                        <div class="relative w-full">
+                        <div class="inline-block w-full relative p-2 rounded-lg ">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                 <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
                                 </svg>
                             </div>
-                            <input [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" (input)="filterClients()" type="text" id="simple-search" placeholder="Search for clients" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" >
+                            <input 
+                            [(ngModel)]="searchText" 
+                            [ngModelOptions]="{standalone: true}" 
+                            (input)="filterClients()" 
+                            type="text" id="simple-search" 
+                            placeholder="" required="" 
+                            class="w-full p-2.5 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" >
                         </div>
                     </form>
                 </div>
+                    <!-- <div class="w-full md:w-1/2">
+                        <form #searchForm class="flex items-center">
+                            <label for="simple-search" class="sr-only">Search</label>
+                            <div class="relative w-full">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
+                                    </svg>
+                                </div>
+                                <input [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" (input)="filterClients()" type="text" id="simple-search" placeholder="Search for clients" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" >
+                            </div>
+                        </form>
+                    </div> -->
                 <div  class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                    <button *ngIf="showdashboardButtons" data-tooltip-target="add-client" type="button" id="createclientButton" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" (click)="openCreateClientModal()">
-                        <div id="add-client" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                            Agregar Cliente
-                            <div class="tooltip-arrow" data-popper-arrow></div>
-                        </div>
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <button *ngIf="showdashboardButtons" 
+                    type="button" 
+                    (click)="openCreateClientModal()"
+                    title="Crear cliente"
+                    id="createclientButton" 
+                    class="inline-block inline-flex items-center justify-center p-1.5 border border-[9F580A]/20 rounded text-green-600 bg-green-600/10 hover:bg-green-600/20 dark:border-green-500/30 dark:bg-green-500/20 dark:hover:bg-green-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors">
+                        <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                             <path fill-rule="evenodd" d="M9 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4H7Zm8-1a1 1 0 0 1 1-1h1v-1a1 1 0 1 1 2 0v1h1a1 1 0 1 1 0 2h-1v1a1 1 0 1 1-2 0v-1h-1a1 1 0 0 1-1-1Z" clip-rule="evenodd"/>
                         </svg>
                     </button>
-                    <button (click)="openModalImportClients()" *ngIf="showdashboardButtons" data-tooltip-target="import-clients" type="button" id="createclientButton"  class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
-                        <div id="import-clients" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                            Importar Clientes
-                        <div class="tooltip-arrow" data-popper-arrow> impot</div>
-                        </div>
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <button 
+                    (click)="openModalImportClients()" 
+                    *ngIf="showdashboardButtons" 
+                    data-tooltip-target="import-clients" 
+                    type="button" id="createclientButton"
+                    title="Importar clientes"  
+                    class="inline-block inline-flex items-center justify-center p-1.5 border border-[9F580A]/20 rounded text-blue-600 bg-blue-600/10 hover:bg-blue-600/20 dark:border-blue-500/30 dark:bg-blue-500/20 dark:hover:bg-blue-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                        <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 15v2a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2m-8 1V4m0 12-4-4m4 4 4-4"/>
                         </svg>
                     </button>
-                    <button *ngIf="showdashboardButtons" data-tooltip-target="export-clients" type="button" id="createclientButton"  class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"  (click)="exportClients()">
-                        <div id="export-clients" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                            Exportar Clientes
-                            <div class="tooltip-arrow" data-popper-arrow></div>
-                        </div>
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <button 
+                    (click)="exportClients()"
+                    *ngIf="showdashboardButtons" 
+                    type="button" id="createclientButton"  
+                    title="Exportar Clientes"
+                    class="inline-block inline-flex items-center justify-center p-1.5 border border-[9F580A]/20 rounded text-blue-600 bg-blue-600/10 hover:bg-blue-600/20 dark:border-blue-500/30 dark:bg-blue-500/20 dark:hover:bg-blue-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors">
+                        
+                        <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 15v2a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2M12 4v12m0-12 4 4m-4-4L8 8"/>
                         </svg>
                     </button>
-                    <button (click)="generatePDF()" *ngIf="!showdashboardButtons" data-tooltip-target="export-report" type="button" id="createclientButton" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" >
-                                <div id="export-report" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                                    Exportar Reporte
-                                    <div class="tooltip-arrow" data-popper-arrow></div>
-                                </div>
-                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <button 
+                    (click)="generatePDF()" 
+                    *ngIf="!showdashboardButtons" 
+                    type="button" id="createclientButton" 
+                    title="Reporte Clientes"
+                    class="inline-block inline-flex items-center justify-center p-1.5 border border-[9F580A]/20 rounded text-blue-600 bg-blue-600/10 hover:bg-blue-600/20 dark:border-blue-500/30 dark:bg-blue-500/20 dark:hover:bg-blue-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" >
+                                <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                     <path fill-rule="evenodd" d="M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2 2 2 0 0 0 2 2h12a2 2 0 0 0 2-2 2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2V4a2 2 0 0 0-2-2h-7Zm-6 9a1 1 0 0 0-1 1v5a1 1 0 1 0 2 0v-1h.5a2.5 2.5 0 0 0 0-5H5Zm1.5 3H6v-1h.5a.5.5 0 0 1 0 1Zm4.5-3a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h1.376A2.626 2.626 0 0 0 15 15.375v-1.75A2.626 2.626 0 0 0 12.375 11H11Zm1 5v-3h.375a.626.626 0 0 1 .625.626v1.748a.625.625 0 0 1-.626.626H12Zm5-5a1 1 0 0 0-1 1v5a1 1 0 1 0 2 0v-1h1a1 1 0 1 0 0-2h-1v-1h1a1 1 0 1 0 0-2h-2Z" clip-rule="evenodd"/>
                                 </svg>
                     </button>
-                    <button *ngIf="!showdashboardButtons" (click)="generateAndPrintPDF()" data-tooltip-target="print-report" type="button" id="createclientButton" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" >
-                                    <div id="print-report" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                                        Imprimir Reporte
-                                        <div class="tooltip-arrow" data-popper-arrow></div>
-                                    </div>
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <button 
+                    *ngIf="!showdashboardButtons" 
+                    (click)="generateAndPrintPDF()" 
+                    type="button" id="createclientButton"
+                    text="Imprimir Reporte" 
+                    class="inline-block inline-flex items-center justify-center p-1.5 border border-[9F580A]/20 rounded text-blue-600 bg-blue-600/10 hover:bg-blue-600/20 dark:border-blue-500/30 dark:bg-blue-500/20 dark:hover:bg-blue-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" >
+                                    <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                         <path fill-rule="evenodd" d="M8 3a2 2 0 0 0-2 2v3h12V5a2 2 0 0 0-2-2H8Zm-3 7a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h1v-4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v4h1a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2H5Zm4 11a1 1 0 0 1-1-1v-4h8v4a1 1 0 0 1-1 1H9Z" clip-rule="evenodd"/>
                                     </svg>
                     </button>
@@ -84,10 +96,10 @@
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 text-center">
                         <tr>
                             <!-- <th scope="col" class="p-4">CVE</th> -->
-                            <th scope="col" class="p-4">Nombre</th>
-                            <th scope="col" class="p-4">Telefono</th>
-                            <th scope="col" class="p-4">Correo</th>
-                            <th scope="col" class="p-4">Fecha Creacion</th>
+                            <th scope="col" class="p-4">Datos</th>
+                            <th scope="col" class="p-4">Contacto</th>
+                            <!-- <th scope="col" class="p-4">Correo</th> -->
+                            <th scope="col" class="p-4">Fechas</th>
                             <th scope="col" class="p-4">Estatus</th>
                             <th *ngIf="showdashboardButtons" scope="col" class="p-4">Acciones</th>
                         </tr>
@@ -95,30 +107,46 @@
                     <tbody>
                         <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-900 text-center" *ngFor="let client of filterClientsList">
                             <!-- <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{client.cve_internal}}</td> -->
-                            <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{client.name}} {{client.father_lastname}} {{client.mother_lastname}} </td>
-                            <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{client.telephone1}}</td>
-                            <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{client.email1}}</td>
-                            <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{client.created_at | date: 'shortDate' }}</td>
-                            <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap"  [ngClass]="{'text-green-600': client.status_desc === 'Activo','text-red-600': client.status_desc === 'Inactivo'}" >
-                                <!-- <div class="flex items-center" [ngClass]="{'text-green-600': client.status_desc === 'Activo','text-red-600': client.status_desc === 'Inactivo'}"> -->
-                                    {{client.status_desc}}
-                                <!-- </div> -->
+                            <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <span class="text-xs text-gray-300"><span class="text-xs text-gray-500">ID:</span> {{client.id}}</span>
+                                <!-- <br><span class="text-xs text-gray-300"><span class="text-xs text-gray-500">cve:</span> {{client.cve_internal}}</span> -->
+                                <span class="text-xs text-gray-300"><span class="text-xs text-gray-500"> Nombre:</span> {{client.name}} {{client.father_lastname}} {{client.mother_lastname}} </span>
+                            </td>
+                            <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <span class="text-xs text-gray-300"><span class="text-xs text-gray-500">Telfono:</span> {{client.telephone1}}</span>
+                                <br><span class="text-xs text-gray-300"><span class="text-xs text-gray-500">Correo:</span> {{client.email1}}</span>
+                            </td>
+                            <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <span class="text-xs text-gray-300"><span class="text-xs text-gray-500">Fecha creacion:</span> {{client.created_at | date: 'shortDate' }}</span>
+                                <br><span class="text-xs text-gray-300"><span class="text-xs text-gray-500">Fecha actualizacion:</span> {{client.updated_at| date: 'shortDate' }}</span>
+                            </td>
+                            <td class="px-1 py-3 font-medium text-gray-900 whitespace-nowrap rounded-lg">
+                                <span class="text-xs text-gray-300 rounded-lg" [ngClass]="{'bg-green-600': client.status_desc === 'Activo','bg-red-600': client.status_desc === 'Inactivo'}"> {{client.status_desc}}</span>
                             </td>
                             <td class="px-5 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <div class="flex items-center space-x-4" *ngIf="showdashboardButtons">
-                                    <button (click)="openUpdateClientModal(client)" type="button" data-drawer-target="drawer-update-client" data-drawer-show="drawer-update-client" aria-controls="drawer-update-client" class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <button (click)="openUpdateClientModal(client)" 
+                                    type="button" 
+                                    title="Actualizar Cliente"
+                                    class="inline-block inline-flex items-center justify-center p-1.5 border border-[9F580A]/20 rounded text-green-600 bg-green-600/10 hover:bg-green-600/20 dark:border-green-500/30 dark:bg-green-500/20 dark:hover:bg-green-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors">
+                                        <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                             <path fill-rule="evenodd" d="M5 8a4 4 0 1 1 7.796 1.263l-2.533 2.534A4 4 0 0 1 5 8Zm4.06 5H7a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h2.172a2.999 2.999 0 0 1-.114-1.588l.674-3.372a3 3 0 0 1 .82-1.533L9.06 13Zm9.032-5a2.907 2.907 0 0 0-2.056.852L9.967 14.92a1 1 0 0 0-.273.51l-.675 3.373a1 1 0 0 0 1.177 1.177l3.372-.675a1 1 0 0 0 .511-.273l6.07-6.07a2.91 2.91 0 0 0-.944-4.742A2.907 2.907 0 0 0 18.092 8Z" clip-rule="evenodd"/>
                                         </svg>
                                     </button>
-                                    <button type="button" data-drawer-target="drawer-read-client-advanced" data-drawer-show="drawer-read-client-advanced" aria-controls="drawer-read-client-advanced" class="py-2 px-3 flex items-center text-sm font-medium text-center text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" (click)="assignContract(client)"  [disabled]="client.status_desc === 'Inactivo'">
-                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <button 
+                                    type="button" 
+                                    title="Agregar Contrato"
+                                    class="inline-block inline-flex items-center justify-center p-1.5 border border-[9F580A]/20 rounded text-green-600 bg-green-600/10 hover:bg-green-600/20 dark:border-green-500/30 dark:bg-green-500/20 dark:hover:bg-green-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors" (click)="assignContract(client)"  [disabled]="client.status_desc === 'Inactivo'">
+                                        <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                             <path fill-rule="evenodd" d="M9 7V2.221a2 2 0 0 0-.5.365L4.586 6.5a2 2 0 0 0-.365.5H9Zm2 0V2h7a2 2 0 0 1 2 2v6.41A7.5 7.5 0 1 0 10.5 22H6a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Z" clip-rule="evenodd"/>
                                             <path fill-rule="evenodd" d="M9 16a6 6 0 1 1 12 0 6 6 0 0 1-12 0Zm6-3a1 1 0 0 1 1 1v1h1a1 1 0 1 1 0 2h-1v1a1 1 0 1 1-2 0v-1h-1a1 1 0 1 1 0-2h1v-1a1 1 0 0 1 1-1Z" clip-rule="evenodd"/>
                                         </svg>
                                     </button>
-                                    <button type="button"  data-modal-toggle="deleteModal" class="flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900" (click)="deleteClient(client.id)">
-                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <button type="button"  
+                                    title="Eliminar Cliente"
+                                    class="inline-block inline-flex items-center justify-center p-1.5 border border-[9F580A]/20 rounded text-red-600 bg-red-600/10 hover:bg-red-600/20 dark:border-red-500/30 dark:bg-red-500/20 dark:hover:bg-red-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors" 
+                                    (click)="deleteClient(client.id)">
+                                        <svg class="w-4 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m6 6 12 12m3-6a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                         </svg>
                                     </button>
@@ -127,6 +155,15 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="mt-4 flow-root sm:mt-8 border-t border-gray-200 dark:border-gray-700" id="contractsSection">
+                <div class="divide-y divide-gray-200 dark:divide-gray-700 p-2">
+                    <div class="flex flex-wrap items-center gap-y-4 py-6 p-2 justify-center">
+                        <span *ngIf="clientList.length == 0" class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                            No se encontraron Clientes.
+                        </span>
+                    </div>
+                </div>   
             </div>
             <nav class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4" aria-label="Table navigation">
                 <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
@@ -150,5 +187,5 @@
                 </ul>
             </nav>
         </div>
-    <!-- </div> -->
+    </div>
 </section>
