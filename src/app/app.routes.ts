@@ -9,8 +9,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { TicketDashboardComponent } from './ticket-dashboard/ticket-dashboard.component';
+import { LoginRegistryComponent } from './login-registry/login-registry.component';
 
 export const routes: Routes = [
+    { path: '', component: LoginRegistryComponent },
     {path: 'product-component', component: ProductsComponent },
     {path: 'header-component', component: HeaderSideComponent },
     {path: 'footer-component', component: FooterSideComponent },
@@ -21,6 +23,9 @@ export const routes: Routes = [
     {path: 'dashboard-component', component: DashboardComponent },
     {path: 'product-detail', component: ProductDetailComponent },
     {path: 'tickets-dashboard', component: TicketDashboardComponent },
+    {path: 'login-registry', component: LoginRegistryComponent},
+  { path: '**', redirectTo: '' } // 👈 fallback al login
+    // {path: 'login-registry', redirectTo: '/dashboard-component', pathMatch: 'full'},
 
 ];
 

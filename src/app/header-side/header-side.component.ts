@@ -32,11 +32,15 @@ private router = inject(Router)
         this.dashboardName = "Dashboard Transacciones"; 
       break;
       case 'tickets-dashboard':
-        alert("Navegando a Soporte");
+        console.log("Navegando a Soporte");
         this.router.navigate(['/tickets-dashboard'], { queryParams: { showButtons: true } });
         this.dashboardName = "Dashboard de Soporte";
         // this.router.navigate(['/tickets-dashboard'], { queryParams: { showButtons: true } });
 
     }
+}
+logout() {
+  this.router.navigate(['/login-registry']);
+  // window.location.href = "http://localhost:8080/realms/manage-users/protocol/openid-connect/auth?client_id=angular-app&redirect_uri=http://localhost:4200&response_type=code";
 }
 }
