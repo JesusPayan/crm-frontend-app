@@ -10,6 +10,10 @@ import { ProductsComponent } from '../products/products.component';
 import { ClientsComponent } from '../clients/clients.component';
 import { ContractComponent } from '../contract/contract.component';
 import { inject } from '@angular/core';
+import { AuthGuard } from '../guards/auth.guard';
+import e from 'express';
+import { UserService } from '../services/user.service';
+
 
 @Component({
   selector: 'app-side-nav-bar',
@@ -21,9 +25,23 @@ import { inject } from '@angular/core';
 export class SideNavBarComponent {
 
   private router = inject(Router)
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private userService: UserService) {}
   showdashboardButtons = false;
-  side:boolean = true;
+  showSideBar:boolean = false;
+  isloggedIn = false;
+
+  ngOnInit() {
+    // const queryParams = this.router.getCurrentNavigation()?.extras.queryParams;
+    // this.showdashboardButtons = queryParams ? !!queryParams['showButtons'] : false;
+    // this.showSideBar = queryParams ? !!queryParams['showSideBar'] : false;
+    // this.isloggedIn = this.userService.getToken();
+    if(!this.isloggedIn){
+      this.router.navigate(['/login']);
+    }else{
+      this.router.navigate(['/contract-component'], { queryParams: { showButtons: true } });
+    }
+
+  }
   openModal(modalName: string) {
     switch (modalName) {
       case 'products-detail':

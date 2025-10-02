@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { Router } from '@angular/router';
 import { inject } from '@angular/core';
+import { AppComponent } from '../app.component';
+import { UserService } from '../services/user.service';
 @Component({
   selector: 'app-header-side',
   standalone: true,
@@ -12,6 +14,7 @@ import { inject } from '@angular/core';
 export class HeaderSideComponent {
 dashboardName: string = '';
 private router = inject(Router)
+constructor(private userService: UserService, private appComponent: AppComponent) {}
   openDashboard(dashboardName: string) {
     console.log("Abriendo dashboard: " + dashboardName);
     switch (dashboardName) {
@@ -40,7 +43,10 @@ private router = inject(Router)
     }
 }
 logout() {
-  this.router.navigate(['/login-registry']);
+  this.userService.logout();
+  this.router.navigate(['/side-nav-bar'], { queryParams: { showSideBar: false } });
+  
+  //redirigimos a keycloak para cerrar sesión
   // window.location.href = "http://localhost:8080/realms/manage-users/protocol/openid-connect/auth?client_id=angular-app&redirect_uri=http://localhost:4200&response_type=code";
 }
 }
