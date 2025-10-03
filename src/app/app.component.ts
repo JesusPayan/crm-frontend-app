@@ -8,6 +8,7 @@ import { HeaderSideComponent } from './header-side/header-side.component';
 import { SideNavBarComponent } from './side-nav-bar/side-nav-bar.component';
 import { FooterSideComponent } from './footer-side/footer-side.component';
 import { ProductsComponent } from "./products/products.component";
+import { AuthService } from './services/auth.service';
 
 
 @Component({
@@ -19,11 +20,15 @@ import { ProductsComponent } from "./products/products.component";
 })
 export class AppComponent {
   title = 'Sistema de control de Cuentas de Streaming y Servicios';
-  constructor(private router: Router) {}
+  constructor(private router: Router,public authService: AuthService) {}
   //creamos una variable para almacenar el token
   token: string | null = null;
-    
+  public isLoggedIn: boolean = false;  
   ngOnInit(): void {
+    this.authService.isLoggedIn$.subscribe((status) => {
+      alert("Cambio en el estado de autenticación: " + status);
+      this.isLoggedIn = status;
+    });
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     // this.router.navigate(['/products-component']);

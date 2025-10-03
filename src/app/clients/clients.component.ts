@@ -16,6 +16,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ImportModalComponent } from '../import-modal/import-modal.component';
 import { jsPDF } from "jspdf";
 import autoTablePlugin from 'jspdf-autotable'
+import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -31,10 +32,10 @@ import autoTablePlugin from 'jspdf-autotable'
 
 export class ClientsComponent {
   @Output() clientEvent = new EventEmitter<Client>();
-
+  currentUserID: number | null = null;
   
-  constructor(public dialog: MatDialog, private clientService: ClientService,  private router: Router, private route: ActivatedRoute) {
-    this.clientService.getClients().subscribe(console.log);
+  constructor(public dialog: MatDialog, private clientService: ClientService,  private router: Router, private route: ActivatedRoute , public authService: AuthService) {
+    this.clientService.getClients(this.currentUserID).subscribe(console.log);
     
   }
 //Declaramos variables
@@ -53,6 +54,9 @@ export class ClientsComponent {
   }
 //Se inicializa el componente cliente
   ngOnInit(): void {
+  const userId = this.authService.getUserId();
+  this.currentUserID = userId ? Number(userId) : 0;
+  console.log("ID USUARIO ACTUAL: ", this.currentUserID);
    this.loadClients(); 
    /*Con esto podemos activar o desactivar los botones dependiendo de donde son llamados*/ 
    this.route.queryParams.subscribe(params => {
@@ -62,7 +66,9 @@ export class ClientsComponent {
 
 // abrimos la modal para crear un nuevo cliente
 openCreateClientModal() {
-  const dialogRef = this.dialog.open(ClientDetailComponent);
+  const dialogRef = this.dialog.open(ClientDetailComponent, {
+    data: this.currentUserID,
+  });
 }
 openModalImportClients(){
   const dialogRef = this.dialog.open(ImportModalComponent, {
@@ -186,13 +192,13 @@ deleteClient(id:number) {
   this.loadClients();
 }
 loadClients() {
-    this.clientService.getClients().subscribe({
+    this.clientService.getClients(this.currentUserID).subscribe({
    next: (data: any) => {
       // console.log('DATA COMPLETA:', data); // 👈 Mira esto en la consola del navegador
-
+      console.log('DATA RECEIVED:', data.data); // 👈 Mira esto en la consola del navegador
       // Ajusta según la estructura real que te devuelve el backend
       this.clientList = data.data || data; // Usa data.data si existe, si no, usa data directo
-
+      console.log('CLIENTES CARGADOS:', this.clientList); // 👈 Verifica los clientes cargados
       // Actualiza total de clientes
       this.totalClients = this.clientList.length;
       this.filterClientsList = this.clientList;

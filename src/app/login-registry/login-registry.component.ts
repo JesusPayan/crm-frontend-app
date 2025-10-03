@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators,FormsModule,FormControl,ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { inject } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login-registry',
@@ -23,7 +24,7 @@ export class LoginRegistryComponent {
   email = new FormControl('');
   password = new FormControl('');
   private router = inject(Router)
-  constructor(private fb: FormBuilder,private userService: UserService) {
+  constructor(private fb: FormBuilder,private userService: UserService , private authService: AuthService) {
     this.buildForm();
   }
 
@@ -44,15 +45,21 @@ switchMode(mode: 'login' | 'register') {
 
   onSubmit() {
 
-    
-    
     if (this.mode === 'login') {
-      console.log('Login mode input', this.form.value);
+      console.log('Login:', this.form.value);
       this.userService.login(this.user).subscribe({
         next: (data) => {
           this.response = data;
           console.log("Informacion que llega del backend",this.response);
           alert(this.response.message);
+          
+          localStorage.setItem('access_token', this.response.access_token);
+          localStorage.setItem('user_id', this.response.user_id);
+          localStorage.setItem('token', 'true');
+          this.authService.loginSuccess();//notifica que el login fue exitoso
+          this.authService.setUserId(this.response.backend_user_id);
+          // redirigir a la página protegida
+          // this.router.navigate(['/contract-component'], { queryParams: { showButtons: true } });
         },
         error: (err) => {
           console.error('Error en login', err);

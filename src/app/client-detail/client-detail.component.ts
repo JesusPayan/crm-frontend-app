@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 })
 export class ClientDetailComponent {
   //Declaramos variables
+  loggedInUserID = ''; // Aquí debes asignar el ID del usuario logueado
   editMode = false;
   client:Client = {
     id:0,
@@ -39,8 +40,18 @@ export class ClientDetailComponent {
   
   constructor(private clientService: ClientService,private dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: Client) {
     if (data) {
-      this.client = data;
-      this.editMode = true;
+      alert("Se cargará el cliente para actualizar" + data.id);
+      console.log("Se cargará el cliente para actualizar" + data.id);
+      if (data.id == 0 || data.id == null || data.id == undefined){
+        console.log("el usuario " + data +" creará un nuevo cliente");
+        this.loggedInUserID = data.toString();
+      }else{
+        this.editMode = true;
+        console.log("el usuario " + data +" actualizara un cliente");
+      }
+      // console.log(data);
+      // this.client = data;
+      // this.editMode = true;
     }
   }
 //  formData = new FormData();
@@ -67,8 +78,10 @@ onSubmit(): void {
     formData.append('email2', this.client.email2);
     formData.append('telephone1', this.client.telephone1);
     formData.append('telephone2', this.client.telephone2);
+    formData.append('created_by', this.loggedInUserID);
     console.log("Se guardara el cliente",this.client);
     this.clientService.createNewClient(formData).subscribe({
+
       next: (res) => {
           console.log('Cliente guardado exitosamente:', res);
           alert("Cliente guardado exitosamente");

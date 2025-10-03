@@ -26,8 +26,8 @@ export class SideNavBarComponent {
 
   private router = inject(Router)
   constructor(public dialog: MatDialog, private userService: UserService) {}
-  showdashboardButtons = false;
-  showSideBar:boolean = false;
+  // showdashboardButtons = false;
+  // showSideBar:boolean = false;
   isloggedIn = false;
 
   ngOnInit() {
@@ -37,7 +37,9 @@ export class SideNavBarComponent {
     // this.isloggedIn = this.userService.getToken();
     if(!this.isloggedIn){
       this.router.navigate(['/login']);
-    }else{
+    } else {
+      // this.showSideBar = true;
+      // this.showdashboardButtons = true;
       this.router.navigate(['/contract-component'], { queryParams: { showButtons: true } });
     }
 
@@ -91,5 +93,11 @@ export class SideNavBarComponent {
         this.router.navigate(['/product-component'], { queryParams: { showButtons: false } });
     }
   }
-
+toggleDropdown(dropdownId: string) {
+  alert("Toggle dropdown: " + dropdownId);
+    const dropdown = document.getElementById(dropdownId);
+    if (dropdown) {
+      dropdown.classList.toggle('hidden');
+    }
+  }
 }

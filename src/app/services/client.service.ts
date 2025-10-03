@@ -11,8 +11,9 @@ export class ClientService {
   createNewClient(clientData: FormData): Observable<any> {
     return this.http.post('http://127.0.0.1:5000/v1/clients/create_client', clientData);
   }
-  getClients(): Observable<any> {
-    return this.http.get('http://127.0.0.1:5000/v1/clients/get_clients');
+  getClients(id: any): Observable<any> {
+    // return this.http.get('http://127.0.0.1:5000/v1/clients/get_clients(');
+    return this.http.get(`http://127.0.0.1:5000/v1/clients/get_clients_by_id/${id}`);
   }
   deleteClient(id: number): Observable<any> {
     return this.http.delete(`http://127.0.0.1:5000/v1/clients/delete_client_by_id/${id}`);

@@ -1,8 +1,7 @@
-    <aside class="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"  aria-label="Sidenav" id="drawer-navigation" x-show="showSideBar" x-transition> >
+    <aside class="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"  aria-label="Sidenav" id="drawer-navigation" x-show="showSideBar" x-transition>
       <div class="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
         <ul class="space-y-2">
           <li>
-            {{showSideBar}}
             <!-- <button
               type="button"
               class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
@@ -28,7 +27,7 @@
                 ></path>
               </svg>
             </button> -->
-            <ul id="dropdown-reports" class="hidden py-2 space-y-2">
+            <ul id="dropdown-reports" class=" py-2 space-y-2">
               <li>
                 <a
                   href="#"
@@ -76,9 +75,11 @@
                 ></path>
               </svg>
             </button>
-            <ul id="dropdown-dropdown-reports" class="hidden py-2 space-y-2">
+            <ul id="dropdown-dropdown-reports" class="py-2 space-y-2" >
               <li>
-                <a routerLink="/dashboard-component" class=" flex items-center p-2 pl-11 w-full text-base font-medium text-green-900 rounded-lg transition duration-75 group hover:bg-green-100 dark:text-white dark:hover:bg-green-700">
+              <li>
+              <li>
+                <a routerLink="/dashboard-component" class="flex items-center p-2 pl-11 w-full text-base font-medium text-green-900 rounded-lg transition duration-75 group hover:bg-green-100 dark:text-white dark:hover:bg-green-700">
                 <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                   <path fill-rule="evenodd" d="M7 6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-2v-4a3 3 0 0 0-3-3H7V6Z" clip-rule="evenodd"/>
                   <path fill-rule="evenodd" d="M2 11a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7Zm7.5 1a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z" clip-rule="evenodd"/>
@@ -139,7 +140,7 @@
                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
               </svg>
             </button>
-            <ul id="dropdown-dropdown-contracts" class="hidden py-2 space-y-2">
+            <ul id="dropdown-dropdown-contracts" class=" py-2 space-y-2">
               <li>
                 <button (click)="openDashboard('contracts-dashboard')" type="button" class=" flex items-center p-2 pl-11 w-full text-base font-medium text-green-900 rounded-lg transition duration-75 group hover:bg-green-100 dark:text-white dark:hover:bg-green-700">
                   <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -170,7 +171,7 @@
                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
               </svg>
             </button>
-            <ul id="dropdown-dropdown-products" class="hidden py-2 space-y-2">
+            <ul id="dropdown-dropdown-products" class=" py-2 space-y-2">
               <li>
                 <button (click)="openDashboard('products-dashboard')" type="button" routerLink="/product-component" class=" flex items-center p-2 pl-11 w-full text-base font-medium text-green-900 rounded-lg transition duration-75 group hover:bg-green-100 dark:text-white dark:hover:bg-green-700">
                   <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -202,7 +203,7 @@
                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
               </svg>
             </button>
-            <ul id="dropdown-dropdown-clients" class="hidden py-2 space-y-2">
+            <ul id="dropdown-dropdown-clients" class=" py-2 space-y-2">
               <li>
                 <button type="button" (click)="openDashboard('clients-dashboard')" class=" flex items-center p-2 pl-11 w-full text-base font-medium text-green-900 rounded-lg transition duration-75 group hover:bg-green-100 dark:text-white dark:hover:bg-green-700">
                 <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -236,7 +237,7 @@
         </ul>
       </div>
       <div
-        class="hidden absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full lg:flex bg-white dark:bg-gray-800 z-20"
+        class=" absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full lg:flex bg-white dark:bg-gray-800 z-20"
       >
         <!-- <a
           href="#"

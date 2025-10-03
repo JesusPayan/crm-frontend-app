@@ -10,6 +10,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { TicketDashboardComponent } from './ticket-dashboard/ticket-dashboard.component';
 import { LoginRegistryComponent } from './login-registry/login-registry.component';
+import { HomePageComponent } from './home-page/home-page.component';
 
 export const routes: Routes = [
     { path: '', component: LoginRegistryComponent },
@@ -24,7 +25,10 @@ export const routes: Routes = [
     {path: 'product-detail', component: ProductDetailComponent },
     {path: 'tickets-dashboard', component: TicketDashboardComponent },
     {path: 'login-registry', component: LoginRegistryComponent},
-  { path: '**', redirectTo: '' } // 👈 fallback al login
+    { path: '**', redirectTo: 'login' } // fallback
+    // {path: 'login-registry', redirectTo: '/dashboard-component', pathMatch: 'full'},
+    // {path: 'home-page',component: HomePageComponent},
+  // { path: '**', redirectTo: '' } // 👈 fallback al login
     // {path: 'login-registry', redirectTo: '/dashboard-component', pathMatch: 'full'},
 
 ];
