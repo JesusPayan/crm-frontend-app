@@ -11,8 +11,8 @@ export class ProductService {
   createNewProduct(productData: FormData): Observable<any> {
       return this.http.post('http://127.0.0.1:5000/v1/products/create_product', productData);
   }
-  getProducts(): Observable<any> {
-    return this.http.get('http://127.0.0.1:5000/v1/products/get_products');
+  getProducts(id:any): Observable<any> {
+    return this.http.get('http://127.0.0.1:5000/v1/products/get_products_by_id/'+id);
   }
   deleteProduct(id: number): Observable<any> {
     return this.http.delete(`http://127.0.0.1:5000/v1/products/delete_product_by_id/${id}`);

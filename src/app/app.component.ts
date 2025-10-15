@@ -26,9 +26,10 @@ export class AppComponent {
   public isLoggedIn: boolean = false;  
   ngOnInit(): void {
     this.authService.isLoggedIn$.subscribe((status) => {
-      alert("Cambio en el estado de autenticación: " + status);
+      // alert("Cambio en el estado de autenticación: " + status);
       this.isLoggedIn = status;
     });
+  
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     // this.router.navigate(['/products-component']);

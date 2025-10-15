@@ -11,7 +11,7 @@ import { ClientDetailComponent } from '../client-detail/client-detail.component'
 import { ClientSummary } from '../models/client_summary';
 import { ContractDetailComponent } from '../contract-detail/contract-detail.component';
 import { SideNavBarComponent } from '../side-nav-bar/side-nav-bar.component';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { ImportModalComponent } from '../import-modal/import-modal.component';
 import { jsPDF } from "jspdf";
@@ -23,7 +23,7 @@ import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-clients',
   standalone: true,
-  imports: [CommonModule, FormsModule, SharedModule],
+  imports: [CommonModule, FormsModule, SharedModule, RouterLink],
   templateUrl: './clients.component.html',
   styleUrl: './clients.component.css'
 })
@@ -95,6 +95,10 @@ filterClients() {
   );
 }
 //Exportamos los clientes a excel o csv }
+goBack() {
+  this.router.navigate(['/home-component']);
+}
+
 exportClients() {
   const worksheet = XLSX.utils.json_to_sheet(this.clientList);
   const workbook = XLSX.utils.book_new();

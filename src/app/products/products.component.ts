@@ -7,6 +7,7 @@ import { Header } from '../models/header';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 import { ProductDetailComponent } from '../product-detail/product-detail.component';
 import { ProductService } from '../services/product.service';
+import { AuthService } from '../services/auth.service';
 import { response } from 'express';
 import { FormsModule,NgModel,FormControl,ReactiveFormsModule, } from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -28,7 +29,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductsComponent {
   searchControl = new FormControl('');
-  constructor(public dialog: MatDialog, private router: Router, private productService: ProductService,private route: ActivatedRoute) {
+  constructor(public dialog: MatDialog, private router: Router, private productService: ProductService,private route: ActivatedRoute , public authService: AuthService) {
     // this.productService.getProducts().subscribe(console.log);+
     if(this.showdashboardButtons===true){
       this.loadProducts();
@@ -45,24 +46,26 @@ export class ProductsComponent {
   total_products = this.productList.length;
   response: any;
   searchText: string = '';
- showdashboardButtons = false;
- productCreated = false;
+  showdashboardButtons = false;
+  productCreated = false;
+  currentUserID: number | null = null;
+
   //Poblamos los encabezados de la app
-  loadProducts(){
-    this.productService.getProducts().subscribe(
-            {next: (data: any) => {
-              // console.log(data);
-              this.response = data;
-              this.productList = this.response.data;
-              this.filteredProducts = this.productList;
-              this.total_products = this.productList.length;
-              this.populateHeaders();    
-            },
-            error: (error: any) =>{
-              console.error(error);
-            }
-          });
-  }
+  // loadProducts(){
+  //   this.productService.getProducts().subscribe(
+  //           {next: (data: any) => {
+  //             // console.log(data);
+  //             this.response = data;
+  //             this.productList = this.response.data;
+  //             this.filteredProducts = this.productList;
+  //             this.total_products = this.productList.length;
+  //             this.populateHeaders();    
+  //           },
+  //           error: (error: any) =>{
+  //             console.error(error);
+  //           }
+  //         });
+  // }
   populateHeaders() {
     
     for (let i = 0; i < this.productList.length; i++) {
@@ -95,29 +98,52 @@ export class ProductsComponent {
   }
   
   ngOnInit(): void {
+    const userId = this.authService.getUserId();
+    this.currentUserID = userId ? Number(userId) : 0;
+    console.log("ID USUARIO ACTUAL: ", this.currentUserID);
+    this.loadProducts();
+  //  this.productService.getProducts().subscribe(
+  //           {next: (data: any) => {
+  //             // console.log(data);
+  //             this.response = data;
+  //             this.productList = this.response.data;
+  //             this.filteredProducts = this.productList;
+  //             this.total_products = this.productList.length;
+  //             this.populateHeaders();
+              
+  //           },
+  //           error: (error: any) =>{
+  //             console.error(error);
+  //           }
+  //         });
 
-   this.productService.getProducts().subscribe(
-            {next: (data: any) => {
+  
+  //     this.route.queryParams.subscribe(params => {
+  //     this.showdashboardButtons = params['showButtons'] === 'true';
+  //   });
+  }
+  //Carga de productos
+  loadProducts() {
+    this.productService.getProducts(this.currentUserID).subscribe(
+      {next: (data: any) => {
               // console.log(data);
               this.response = data;
               this.productList = this.response.data;
               this.filteredProducts = this.productList;
               this.total_products = this.productList.length;
               this.populateHeaders();
-              
             },
             error: (error: any) =>{
               console.error(error);
             }
           });
-
+  }
   
-      this.route.queryParams.subscribe(params => {
-      this.showdashboardButtons = params['showButtons'] === 'true';
-    });
-  }  
- 
 
+ 
+  goBack() {
+    this.router.navigate(['/home-component']);
+  }
   openCreateProductModal() {
     const dialogRef = this.dialog.open(ProductDetailComponent);
   }

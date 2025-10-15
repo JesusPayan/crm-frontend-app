@@ -54,7 +54,8 @@ export class AuthService {
   loginSuccess() {
     this.loggedIn.next(true);
     this.isLoggedIn = true;
-    this.router.navigate(['/contract-component'], { queryParams: { showButtons: true } });
+    // this.router.navigate(['/contract-component'], { queryParams: { showButtons: true } });
+    this.router.navigate(['/home-component'], { queryParams: { showButtons: true } });
   }
 
   logout() {
@@ -71,7 +72,7 @@ export class AuthService {
   getUserId(): string | null {
     const userId = localStorage.getItem('user_id');
     console.log("Obteniendo userId del servicio AuthService:", userId);
-    alert("Obteniendo userId del servicio AuthService: " + userId);
+    // alert("Obteniendo userId del servicio AuthService: " + userId);
     return userId;
   }
 }

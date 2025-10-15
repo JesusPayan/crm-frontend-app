@@ -25,6 +25,7 @@ export const routes: Routes = [
     {path: 'product-detail', component: ProductDetailComponent },
     {path: 'tickets-dashboard', component: TicketDashboardComponent },
     {path: 'login-registry', component: LoginRegistryComponent},
+    {path: 'home-component', component: HomePageComponent},
     { path: '**', redirectTo: 'login' } // fallback
     // {path: 'login-registry', redirectTo: '/dashboard-component', pathMatch: 'full'},
     // {path: 'home-page',component: HomePageComponent},

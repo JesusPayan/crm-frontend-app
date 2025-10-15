@@ -35,13 +35,13 @@ export class SideNavBarComponent {
     // this.showdashboardButtons = queryParams ? !!queryParams['showButtons'] : false;
     // this.showSideBar = queryParams ? !!queryParams['showSideBar'] : false;
     // this.isloggedIn = this.userService.getToken();
-    if(!this.isloggedIn){
-      this.router.navigate(['/login']);
-    } else {
-      // this.showSideBar = true;
-      // this.showdashboardButtons = true;
-      this.router.navigate(['/contract-component'], { queryParams: { showButtons: true } });
-    }
+    // if(!this.isloggedIn){
+    //   this.router.navigate(['/login']);
+    // } else {
+    //   // this.showSideBar = true;
+    //   // this.showdashboardButtons = true;
+    //   this.router.navigate(['/contract-component'], { queryParams: { showButtons: true } });
+    // }
 
   }
   openModal(modalName: string) {
